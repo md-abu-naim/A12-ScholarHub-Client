@@ -15,7 +15,7 @@ const Navber = () => {
                         </div>
                     </div>
                     <ul tabIndex={0} className="menu menu-sm font-bold dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><Link to='/dashboard'>Dashboard</Link></li>
+                        <li><Link to='/dashboard/view-booked-session'>Dashboard</Link></li>
                         <li><Link to='/signIn'>SignIn</Link></li>
                         <li><Link to='/signUp'>SignUp</Link></li>
                         <li><a>Logout</a></li>

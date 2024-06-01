@@ -8,6 +8,7 @@ import AllTutors from "../Pages/Home/AllTutors";
 import Login from "../Components/Login";
 import SignUp from "../Components/SignUp";
 import Dashboard from "../Layouts/Dashboard";
+import ViewBookedSession from "../Pages/Dashboard/StudentBar/ViewBookedSession";
 
 
 const router = createBrowserRouter([
@@ -40,7 +41,13 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard />
+        element: <Dashboard />,
+        children: [
+            {
+                path:'view-booked-session',
+                element: <ViewBookedSession />
+            }
+        ]
     },
 ]);
 
