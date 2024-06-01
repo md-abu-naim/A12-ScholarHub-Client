@@ -1,0 +1,75 @@
+[
+    {
+      "sassion_title": "Advanced Calculus",
+      "tutor_name": "Dr. Emily Clark",
+      "rating": 4.8,
+      "description": "Dive deep into the concepts of calculus including integrals, derivatives, and multivariable calculus. Ideal for college-level students.",
+      "registration_start_date": "2024-06-01",
+      "registration_end_date": "2024-06-15",
+      "class_start_time": "10:00 AM",
+      "class_end_time": "12:00 PM",
+      "session_duration": "2 hours",
+      "registration_fee": "$150"
+    },
+    {
+      "sassion_title": "Introduction to Python Programming",
+      "tutor_name": "Mr. John Smith",
+      "rating": 4.5,
+      "description": "Learn the basics of Python programming, including syntax, data types, and simple algorithms. Perfect for beginners.",
+      "registration_start_date": "2024-06-05",
+      "registration_end_date": "2024-06-20",
+      "class_start_time": "2:00 PM",
+      "class_end_time": "4:00 PM",
+      "session_duration": "2 hours",
+      "registration_fee": "$100"
+    },
+    {
+      "sassion_title": "Organic Chemistry Essentials",
+      "tutor_name": "Dr. Karen Lee",
+      "rating": 4.7,
+      "description": "Understand the fundamentals of organic chemistry, including molecular structures, reactions, and mechanisms. Suitable for high school and college students.",
+      "registration_start_date": "2024-06-10",
+      "registration_end_date": "2024-06-25",
+      "class_start_time": "9:00 AM",
+      "class_end_time": "11:00 AM",
+      "session_duration": "2 hours",
+      "registration_fee": "$120"
+    },
+    {
+      "sassion_title": "Shakespearean Literature",
+      "tutor_name": "Prof. William Thompson",
+      "rating": 4.9,
+      "description": "Explore the works of William Shakespeare, including plays, sonnets, and historical context. Perfect for literature enthusiasts.",
+      "registration_start_date": "2024-06-15",
+      "registration_end_date": "2024-06-30",
+      "class_start_time": "1:00 PM",
+      "class_end_time": "3:00 PM",
+      "session_duration": "2 hours",
+      "registration_fee": "$130"
+    },
+    {
+      "sassion_title": "Data Science with R",
+      "tutor_name": "Dr. Michael Rivera",
+      "rating": 4.6,
+      "description": "Learn the essentials of data science using R programming language, including data manipulation, visualization, and basic machine learning.",
+      "registration_start_date": "2024-06-20",
+      "registration_end_date": "2024-07-05",
+      "class_start_time": "11:00 AM",
+      "class_end_time": "1:00 PM",
+      "session_duration": "2 hours",
+      "registration_fee": "$200"
+    },
+    {
+      "sassion_title": "Introduction to Macroeconomics",
+      "tutor_name": "Prof. Susan Martin",
+      "rating": 4.4,
+      "description": "Understand the principles of macroeconomics, including supply and demand, inflation, and fiscal policy. Ideal for high school and college students.",
+      "registration_start_date": "2024-06-25",
+      "registration_end_date": "2024-07-10",
+      "class_start_time": "3:00 PM",
+      "class_end_time": "5:00 PM",
+      "session_duration": "2 hours",
+      "registration_fee": "$110"
+    }
+  ]
+  
