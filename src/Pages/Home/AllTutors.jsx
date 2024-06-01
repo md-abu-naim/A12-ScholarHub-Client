@@ -1,23 +1,30 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import SectionTitle from "../../Shared/SectionTitle";
+import useAxiosCommon from "../../Hooks/useAxiosCommon";
+import { useQuery } from "@tanstack/react-query";
+import {PropagateLoader} from 'react-spinners'
 
 const AllTutors = () => {
-    const [tutors, setTutors] = useState([])
+    
+    const axiosCommon = useAxiosCommon()
 
-    useEffect(() => {
-        axios('/Tutors.json')
-            .then(res => {
-                setTutors(res.data)
-            })
+    const {data: tutors = [], isLoading} = useQuery({
+        queryKey: ['tutors'],
+        queryFn: async() => {
+            const {data} = await axiosCommon.get('/tutors')
+            const tutorsData = data.filter(tutor => tutor.role === 'Tutor')
+            return tutorsData
+        }
     })
+
+    if(isLoading) return <PropagateLoader color="#36d7b7" /> 
     return (
         <div className="pt-24">
             <SectionTitle heading='All Tutors' subHeading='Our Tutors team' ></SectionTitle>
             <div className=" text-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
                 {
-                    tutors.slice(0, 8).map((tutor, i) => <div key={i} className="max-w-md p-4 text-white">
+                    tutors.map((tutor, i) => <div key={i} className="max-w-md p-4 text-white">
                         <div key={tutor.id} className="card rounded-none">
                             <div className=" dropdown relative dropdown-hover rounded-md">
                                 <div tabIndex={0} role="button" ><img className=' rounded-sm' src={tutor.image} alt="Shoes" /></div>

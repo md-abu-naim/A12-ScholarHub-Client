@@ -4,18 +4,21 @@ import SectionTitle from "../../Shared/SectionTitle";
 import Banner from "./Banner";
 import SassionCard from "./SassionCard";
 import Tutors from "./Tutors";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useQuery } from '@tanstack/react-query'
+import useAxiosCommon from '../../Hooks/useAxiosCommon';
 
 const Home = () => {
-    const [CountTutors, setCountTutors] = useState([])
+    const axiosCommon = useAxiosCommon()
 
-    useEffect(() => {
-        axios('/Tutors.json')
-            .then(res => {
-                setCountTutors(res.data)
-            })
+    const {data: tutors = [], isLoading} = useQuery({
+        queryKey: ['tutors'],
+        queryFn: async() => {
+            const {data} = await axiosCommon.get('/tutors')
+            const tutorsData = data.filter(tutor => tutor.role === 'Tutor')
+            return tutorsData
+        }
     })
+
     return (
         <div>
             <div className="mt-10">
@@ -30,10 +33,10 @@ const Home = () => {
             <div className="my-14">
                 <SectionTitle heading='Tutor Section' subHeading='Our Tutor team' ></SectionTitle>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-5">
-                    <Tutors />
+                    {isLoading ? 'loading' : tutors.slice(0,8).map(tutor => <Tutors key={tutor._id} tutor={tutor}/>)}
                 </div>
                 <div className="flex justify-center items-center">
-                   {CountTutors.length > 8 &&  <Link to='/allTutors'><CommonBtn title='See All Tutors' /></Link>}
+                   {tutors.length > 8 &&  <Link to='/allTutors'><CommonBtn title='See All Tutors' /></Link>}
                 </div>
             </div>
         </div>

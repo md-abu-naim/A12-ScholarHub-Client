@@ -1,18 +1,21 @@
 import { createContext, useEffect, useState } from "react";
-import { GithubAuthProvider, GoogleAuthProvider,
- createUserWithEmailAndPassword,onAuthStateChanged,
- signInWithEmailAndPassword,signInWithPopup,signOut,
- updateProfile } from "firebase/auth";
+import {
+    GithubAuthProvider, GoogleAuthProvider,
+    createUserWithEmailAndPassword, onAuthStateChanged,
+    signInWithEmailAndPassword, signInWithPopup, signOut,
+    updateProfile
+} from "firebase/auth";
 import auth from "../Firebase/Firebase.config";
-// import axios from "axios";
+import useAxiosCommon from "../Hooks/useAxiosCommon";
 
 export const AuthContext = createContext(null)
 const googleProvider = new GoogleAuthProvider()
 const githubProvider = new GithubAuthProvider()
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const axiosCommon = useAxiosCommon()
 
     const createUser = (email, password) => {
         setLoading(true)
@@ -44,22 +47,36 @@ const AuthProvider = ({children}) => {
 
     const logOutUser = () => {
         setLoading(true)
-        // axios('https://granny-resturant-server.vercel.app/logOut', {withCredentials: true})
-        // .then(data => console.log(data.data))
         return signOut(auth)
     }
 
     useEffect(() => {
-        const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser)
-            setLoading(false)
-        })
-        return () => unSubscribe()
-    }, [])
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            if (currentUser) {
+                const userInfo = { email: currentUser.email };
+                axiosCommon.post('/jwt', userInfo)
+                    .then(res => {
+                        if (res.data.token) {
+                            localStorage.setItem('access-token', res.data.token);
+                        }
+                    })
+            }
+            else {
+                localStorage.removeItem('access-token');
+            }
+            setLoading(false);
+        });
+        return () => {
+            return unsubscribe();
+        }
+    }, [axiosCommon])
 
-    const authInfo = {createUser, signInwithGoogle,
-     loading, user, setUser, loginUser, updateUser,
-     logOutUser, signInwithgithub}
+    const authInfo = {
+        createUser, signInwithGoogle,
+        loading, user, setUser, loginUser, updateUser,
+        logOutUser, signInwithgithub
+    }
     return (
         <AuthContext.Provider value={authInfo}>
             {children}

@@ -41,8 +41,8 @@ const SignUp = () => {
                         const userInfo = {
                             name: result?.user?.displayName,
                             email: result?.user?.email,
-                            role: role
-
+                            role: role,
+                            image: photo
                         }
                         axiosCommon.post('/users', userInfo)
                             .then(res => {
