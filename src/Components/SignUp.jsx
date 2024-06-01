@@ -1,9 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navber from '../Shared/Navber';
 import useAuth from '../Hooks/useAuth';
+import useAxiosCommon from '../Hooks/useAxiosCommon';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
-    const { createUser, updateUser, setUser } = useAuth()
+    const { createUser, updateUser } = useAuth()
+    const axiosCommon = useAxiosCommon()
+    const navigate = useNavigate()
 
     const handleSignUp = e => {
         e.preventDefault()
@@ -12,19 +16,44 @@ const SignUp = () => {
         const email = form.email.value
         const password = form.password.value;
         const role = form.role.value
-        const user = { name, email, password, role }
-        console.log(user);
+
+        e.target.reset()
+
+        if (password === '') {
+            return toast.error('Please fulfill your form')
+        }
+        else if (password.length < 6) {
+            return toast.error('Password should be at least 6 characters or longer')
+        }
+        if (!/[A-Z]/.test(password)) {
+            return toast.error('Your password should have at least one Uppercase characters')
+        }
+        else if (!/[a-z]/.test(password)) {
+            return toast.error('Your password should have at least one Lowercase characters')
+        }
 
         createUser(email, password)
             .then(result => {
-                updateUser(name)
-                setUser({
-                    ...user,
-                    displayName: name,
-                })
                 console.log(result.user);
-            })
+                updateUser(name)
+                    .then(() => {
+                        const userInfo = {
+                            name: result?.user?.displayName,
+                            email: result?.user?.email,
+                            role: role
 
+                        }
+                        axiosCommon.post('/users', userInfo)
+                            .then(res => {
+                                console.log(res.data);
+                                if (res.data.insertedId) {
+                                    toast.success('User login & added to DB successfully')
+                                    return navigate('/')
+                                }
+                            })
+                    })
+            })
+            .catch(error => toast.error(error.message))
     }
     return (
         <>

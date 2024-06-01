@@ -1,8 +1,28 @@
 import { FaGithub } from "react-icons/fa";
 import Navber from "../Shared/Navber";
 import { Link } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+    const {loginUser} = useAuth()
+
+    const handleLogin = e => {
+        e.preventDefault()
+        const form = e.target
+        const email = form.email.value
+        const password = form.password.value
+        console.log(email, password);
+
+        loginUser(email, password)
+        .then(result => {
+            console.log(result.user);
+        })
+        .catch(error => {
+            console.error(error);
+            toast.error(error)
+        })
+    }
     return (
         <>
             <Navber />
@@ -11,7 +31,7 @@ const Login = () => {
                     <h2 className='text-2xl my-3 font-bold text-center'>ScholarHub</h2>
                     <h2 className='text-2xl my-3 font-bold text-center'>Please Sign In.</h2>
 
-                    <form >
+                    <form onSubmit={handleLogin}>
                         <div className="pb-2">
                             <label className="block text-sm text-white dark:text-gray-200">Email</label>
                             <input type="email" name="email" placeholder="Enter your Email" className="block w-full px-4 py-2 text-white bg-gray-600 border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" />
