@@ -9,7 +9,7 @@ const SassionCardDetails = () => {
     const sassions = sassionsDetails.find(sassion => sassion.sassion_title === sassion_title)
     const { sassion_title: title, tutor_name, rating, description,
         registration_start_date, registration_end_date, class_start_time,
-        class_end_time, session_duration, registration_fee } = sassions || {}
+        class_end_time, session_duration, registration_fee, category } = sassions || {}
 
     useEffect(() => {
         axios('/SassionCard.json')
@@ -38,15 +38,21 @@ const SassionCardDetails = () => {
                             <p className='mt-2 text-white '>
                                 {description}
                             </p>
-                            <p className='mt-6 text-sm font-bold text-white '>
-                                Tutor Name: {tutor_name}
-                            </p>
+                            <div className="flex md:justify-between flex-col md:flex-row">
+                                <p className='mt-6 text-sm font-bold text-white '>
+                                    Tutor Name: {tutor_name}
+                                </p>
+                                <p className='mt-6 text-sm font-bold text-white '>
+                                    Category: {category}
+                                </p>
+                            </div>
                             <div className='flex items-center gap-5'>
-                                <div className="md:flex md:flex-row lg:flex-col md:justify-around md:gap-10 lg:gap-0">
+                                <div className="">
                                     <p className='mt-2 text-sm  text-white '>Class start: {class_start_time}</p>
                                     <p className='mt-2 text-sm  text-white '>Class end: {class_end_time}</p>
                                     <p className='mt-2 text-sm  text-white '>Class duration: {session_duration}</p>
                                 </div>
+
                             </div>
                             <div className="flex justify-between items-center">
                                 <p className='mt-6 text-lg font-bold text-white '>

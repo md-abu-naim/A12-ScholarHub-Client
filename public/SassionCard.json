@@ -9,7 +9,8 @@
       "class_start_time": "10:00 AM",
       "class_end_time": "12:00 PM",
       "session_duration": "2 hours",
-      "registration_fee": "$150"
+      "registration_fee": "$150",
+      "category": "Mathematics"
     },
     {
       "sassion_title": "Introduction to Python Programming",
@@ -21,7 +22,8 @@
       "class_start_time": "2:00 PM",
       "class_end_time": "4:00 PM",
       "session_duration": "2 hours",
-      "registration_fee": "$100"
+      "registration_fee": "$100",
+      "category": "Computer Science"
     },
     {
       "sassion_title": "Organic Chemistry Essentials",
@@ -33,7 +35,8 @@
       "class_start_time": "9:00 AM",
       "class_end_time": "11:00 AM",
       "session_duration": "2 hours",
-      "registration_fee": "$120"
+      "registration_fee": "$120",
+      "category": "Chemistry"
     },
     {
       "sassion_title": "Shakespearean Literature",
@@ -45,7 +48,8 @@
       "class_start_time": "1:00 PM",
       "class_end_time": "3:00 PM",
       "session_duration": "2 hours",
-      "registration_fee": "$130"
+      "registration_fee": "$130",
+      "category": "Literature"
     },
     {
       "sassion_title": "Data Science with R",
@@ -57,7 +61,8 @@
       "class_start_time": "11:00 AM",
       "class_end_time": "1:00 PM",
       "session_duration": "2 hours",
-      "registration_fee": "$200"
+      "registration_fee": "$200",
+      "category": "Data Science"
     },
     {
       "sassion_title": "Introduction to Macroeconomics",
@@ -69,7 +74,8 @@
       "class_start_time": "3:00 PM",
       "class_end_time": "5:00 PM",
       "session_duration": "2 hours",
-      "registration_fee": "$110"
+      "registration_fee": "$110",
+      "category": "Economics"
     }
   ]
   
