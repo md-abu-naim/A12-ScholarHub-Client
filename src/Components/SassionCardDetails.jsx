@@ -1,6 +1,20 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
 const SassionCardDetails = () => {
+    const [sassionsDetails, setSassionsDetails] = useState([])
+    const {sassion_title} = useParams()
+    const sassions = sassionsDetails.find(sassion => sassion.sassion_title === sassion_title)
+    const {sassion_title : title, tutor_name, rating, description,
+         registration_start_date, registration_end_date, class_start_time,
+         class_end_time, session_duration, registration_fee} = sassions || {}
+
+    useEffect(() => {
+        axios('/SassionCard.json')
+            .then(res => setSassionsDetails(res.data))
+    }, [])
     return (
         <div className="pt-24 ">
             <div className='flex flex-col lg:flex-row justify-around gap-5  min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto '>
@@ -9,37 +23,37 @@ const SassionCardDetails = () => {
                     <div className='flex-1  border-[#C39C5D] border px-4 py-7  rounded-md shadow-md md:min-h-[350px]'>
                         <div className='flex items-center justify-between'>
                             <span className='text-sm font-light text-white '>
-                                Ragistration start: 12/08/2024
+                                Ragistration start: {registration_start_date}
                             </span>
                             <span className='text-sm font-light text-white '>
-                                Ragistration end: 12/08/2024
+                                Ragistration end: {registration_end_date}
                             </span>
                         </div>
 
                         <div>
                             <h1 className='mt-2 md:text-3xl text-xl font-semibold text-white '>
-                                Introduction to Python Programming
+                                {title}
                             </h1>
 
                             <p className='mt-2 text-white '>
-                                Understand the fundamentals of organic chemistry, including molecular structures, reactions, and mechanisms. Suitable for high school and college students.
+                                {description}
                             </p>
                             <p className='mt-6 text-sm font-bold text-white '>
-                                Tutor Name: Farhan Adnan Farabi
+                                Tutor Name: {tutor_name}
                             </p>
                             <div className='flex items-center gap-5'>
                                 <div className="md:flex md:flex-row lg:flex-col md:justify-around md:gap-10 lg:gap-0">
-                                    <p className='mt-2 text-sm  text-white '>Class start: 12/08/2024</p>
-                                    <p className='mt-2 text-sm  text-white '>Class end: 12/08/2024</p>
-                                    <p className='mt-2 text-sm  text-white '>Class duration: 5.4/days</p>
+                                    <p className='mt-2 text-sm  text-white '>Class start: {class_start_time}</p>
+                                    <p className='mt-2 text-sm  text-white '>Class end: {class_end_time}</p>
+                                    <p className='mt-2 text-sm  text-white '>Class duration: {session_duration}</p>
                                 </div>
                             </div>
                             <div className="flex justify-between items-center">
                                 <p className='mt-6 text-lg font-bold text-white '>
-                                    Registration Fee: $50
+                                    Registration Fee: ${registration_fee}
                                 </p>
                                 <p className='mt-6 text-lg font-bold text-white '>
-                                    Average rating: 5.2
+                                    Average rating: {rating}
                                 </p>
                             </div>
                         </div>
