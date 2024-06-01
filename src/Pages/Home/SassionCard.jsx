@@ -45,7 +45,7 @@ const SassionCard = () => {
 
                     </div>
                     <div className="flex bottom-0 flex-grow items-end justify-end mt-4">
-                        <Link to={`/${sassion.sassion_title}`} ><CommonBtn /></Link>
+                        <Link to={`/${sassion.sassion_title}`} ><CommonBtn title='Ongoing' /></Link>
                     </div>
                 </div>)
             }
