@@ -8,14 +8,16 @@ import { AiOutlineBars } from 'react-icons/ai'
 import { IoCreateSharp } from "react-icons/io5";
 import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import useAuth from '../../../Hooks/useAuth';
 const Sideber = () => {
-
     const [isActive, setActive] = useState(false)
+    const { logOutUser } = useAuth()
 
     // Sidebar Responsive Handler
     const handleToggle = () => {
         setActive(!isActive)
     }
+
     return (
         <div>
             <>
@@ -123,7 +125,7 @@ const Sideber = () => {
                         </NavLink>
                         {/* logout */}
                         <button
-
+                            onClick={logOutUser}
                             className='flex w-full items-center px-4 py-2 mt-5 text-black hover:text-white hover:bg-black transition-colors duration-300 transform'
                         >
                             <GrLogout className='w-5 h-5' />
