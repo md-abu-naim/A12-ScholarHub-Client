@@ -9,12 +9,16 @@ import Login from "../Components/Login";
 import SignUp from "../Components/SignUp";
 import Dashboard from "../Layouts/Dashboard";
 import ViewBookedSession from "../Pages/Dashboard/StudentBar/ViewBookedSession";
+import CreateNote from "../Pages/Dashboard/StudentBar/CreateNote";
+import ErrorPage from "../Shared/ErrorPage";
+import ViewBookedSessionDetails from "../Pages/Dashboard/StudentBar/ViewBookedSessionDetails";
 
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root /> ,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -46,7 +50,15 @@ const router = createBrowserRouter([
             {
                 path:'view-booked-session',
                 element: <ViewBookedSession />
-            }
+            },
+            {
+                path:'booked-session/:session_title',
+                element: <ViewBookedSessionDetails />
+            },
+            {
+                path:'create-note',
+                element: <CreateNote />
+            },
         ]
     },
 ]);

@@ -57,7 +57,7 @@ const Sideber = () => {
                                 <NavLink
                                     to='view-booked-session'
                                     className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-gray-300  text-black' : 'text-black'
+                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                                         }`
                                     }
                                 >
@@ -68,9 +68,9 @@ const Sideber = () => {
 
                                 {/* Creat note */}
                                 <NavLink
-                                    to='add-room'
+                                    to='create-note'
                                     className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-gray-300  text-black' : 'text-black'
+                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                                         }`
                                     }
                                 >
@@ -82,7 +82,7 @@ const Sideber = () => {
                                 <NavLink
                                     to='my-listings'
                                     className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-gray-300  text-black' : 'text-black'
+                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                                         }`
                                     }
                                 >
@@ -94,7 +94,7 @@ const Sideber = () => {
                                 <NavLink
                                     to='my-listings'
                                     className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-gray-300  text-black' : 'text-black'
+                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                                         }`
                                     }
                                 >
@@ -113,7 +113,7 @@ const Sideber = () => {
                         <NavLink
                             to='/dashboard/profile'
                             className={({ isActive }) =>
-                                `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-gray-300  text-black' : 'text-black'
+                                `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                                 }`
                             }
                         >
