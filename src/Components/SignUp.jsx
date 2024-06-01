@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import Navber from '../Shared/Navber';
+import useAuth from '../Hooks/useAuth';
 
 const SignUp = () => {
+    const { createUser, updateUser, setUser } = useAuth()
 
     const handleSignUp = e => {
         e.preventDefault()
@@ -10,8 +12,18 @@ const SignUp = () => {
         const email = form.email.value
         const password = form.password.value;
         const role = form.role.value
-        const user = {name, email, password, role}
+        const user = { name, email, password, role }
         console.log(user);
+
+        createUser(email, password)
+            .then(result => {
+                updateUser(name)
+                setUser({
+                    ...user,
+                    displayName: name,
+                })
+                console.log(result.user);
+            })
 
     }
     return (
@@ -36,8 +48,8 @@ const SignUp = () => {
                         </div>
                         <div className='mt-4'>
                             <label className="block text-sm text-white dark:text-gray-200">Role</label>
-                            <select name='role'  className="select select-ghost w-full bg-gray-600 border rounded-lg text-white ">
-                                <option disabled selected>Select your Role</option>
+                            <select name='role' defaultValue='defautl' className="select select-ghost w-full bg-gray-600 border rounded-lg text-white ">
+                                <option disabled value='default' >Select your Role</option>
                                 <option className='text-white'>Admin</option>
                                 <option className='text-white'>Tutor</option>
                                 <option className='text-white'>Student</option>
