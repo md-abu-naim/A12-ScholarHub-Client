@@ -1,6 +1,6 @@
 import { FaGithub } from "react-icons/fa";
 import Navber from "../Shared/Navber";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
@@ -9,6 +9,7 @@ const Login = () => {
     const { loginUser, signInwithGoogle, signInwithgithub } = useAuth()
     const axiosCommon = useAxiosCommon()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const handleLogin = e => {
         e.preventDefault()
@@ -21,6 +22,7 @@ const Login = () => {
             .then(result => {
                 console.log(result.user);
                 toast.success('User signIn successfully')
+                navigate(location.state || '/')
             })
             .catch(error => {
                 console.error(error);
@@ -33,7 +35,7 @@ const Login = () => {
             .then(result => {
                 console.log(result.user);
                 toast.success('User signUp successfully')
-                navigate('/')
+                navigate(location.state || '/')
                 const userInfo = {
                     name: result?.user?.displayName,
                     email: result?.user?.email,
@@ -58,7 +60,7 @@ const Login = () => {
         signInwithgithub()
             .then(result => {
                 toast.success('User signUp successfully')
-                navigate('/')
+                navigate(location.state || '/')
                 const userInfo = {
                     name: result?.user?.displayName,
                     email: result?.user?.email,

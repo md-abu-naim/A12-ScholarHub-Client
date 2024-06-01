@@ -12,6 +12,7 @@ import ViewBookedSession from "../Pages/Dashboard/StudentBar/ViewBookedSession";
 import CreateNote from "../Pages/Dashboard/StudentBar/CreateNote";
 import ErrorPage from "../Shared/ErrorPage";
 import ViewBookedSessionDetails from "../Pages/Dashboard/StudentBar/ViewBookedSessionDetails";
+import PrivateRoutes from "./PrivateRoutes";
 
 
 const router = createBrowserRouter([
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/:sassion_title',
-                element: <SassionCardDetails />
+                element: <PrivateRoutes><SassionCardDetails /></PrivateRoutes>
             },
 
         ]
@@ -45,19 +46,19 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <PrivateRoutes><Dashboard /></PrivateRoutes>,
         children: [
             {
                 path:'view-booked-session',
-                element: <ViewBookedSession />
+                element: <PrivateRoutes><ViewBookedSession /></PrivateRoutes>
             },
             {
                 path:'booked-session/:session_title',
-                element: <ViewBookedSessionDetails />
+                element: <PrivateRoutes><ViewBookedSessionDetails /></PrivateRoutes>
             },
             {
                 path:'create-note',
-                element: <CreateNote />
+                element: <PrivateRoutes><CreateNote /></PrivateRoutes>
             },
         ]
     },
