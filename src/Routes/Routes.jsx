@@ -5,6 +5,9 @@ import Root from "../Layouts/Root";
 import Home from "../Pages/Home/Home";
 import SassionCardDetails from "../Components/SassionCardDetails";
 import AllTutors from "../Pages/Home/AllTutors";
+import Login from "../Components/Login";
+import SignUp from "../Components/SignUp";
+import Dashboard from "../Layouts/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -26,6 +29,18 @@ const router = createBrowserRouter([
             },
 
         ]
+    },
+    {
+        path: '/signIn',
+        element: <Login />
+    },
+    {
+        path: '/signUp',
+        element: <SignUp />
+    },
+    {
+        path: '/dashboard',
+        element: <Dashboard />
     },
 ]);
 
