@@ -2,10 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const SassionCardDetails = () => {
     const [sassionsDetails, setSassionsDetails] = useState([])
     const { sassion_title } = useParams()
+    const axiosSecure =  useAxiosSecure()
     const sassions = sassionsDetails.find(sassion => sassion.sassion_title === sassion_title)
     const { sassion_title: title, tutor_name, rating, description,
         registration_start_date, registration_end_date, class_start_time,
@@ -15,10 +18,18 @@ const SassionCardDetails = () => {
         axios('/SassionCard.json')
             .then(res => setSassionsDetails(res.data))
     }, [])
+
+    const { data: reviews = [], } = useQuery({
+        queryKey: ['tutors'],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get('/reviews')
+            console.log(data);
+            return data
+        }
+    })
     return (
         <div className="pt-24 ">
             <div className='flex flex-col lg:flex-row justify-around gap-5  min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto '>
-                {/* Job Details */}
                 <div className="w-full">
                     <div className='flex-1  border-[#C39C5D] border px-4 py-7  rounded-md shadow-md md:min-h-[350px]'>
                         <div className='flex items-center justify-between'>
@@ -65,13 +76,9 @@ const SassionCardDetails = () => {
                         </div>
                         <button className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
                             <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
-                            {/* <!-- Top glass gradient --> */}
                             <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
-                            {/* <!-- Bottom gradient --> */}
                             <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
-                            {/* <!-- Left gradient --> */}
                             <span className="absolute bottom-0 left-0 w-4 h-full bg-gradient-to-r from-white to-transparent opacity-5"></span>
-                            {/* <!-- Right gradient --> */}
                             <span className="absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5"></span>
                             <span className="absolute inset-0 w-full h-full border border-white rounded-md opacity-10"></span>
                             <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-5"></span>
@@ -79,37 +86,26 @@ const SassionCardDetails = () => {
                         </button>
                     </div>
                 </div>
-                {/* Place A Bid Form */}
                 <div className="w-full">
                     <section className='p-6 border-[#C39C5D] border text-white rounded-md shadow-md flex-1 '>
                         <h2 className='text-lg font-semibold capitalize '>
                             Students Review*
                         </h2>
                         <div className="mt-8 space-y-4">
-                            <div className=" bg-[#1B1616] p-5 rounded-lg">
+                            {
+                            reviews.map(review => <div key={review._id} className=" bg-[#1B1616] p-5 rounded-lg">
                                 <div className="flex flex-col space-y-4 md:space-y-0">
                                     <div className="flex items-center mb-3 gap-3">
-                                        <img src="https://source.unsplash.com/75x75/?portrait" alt="" className="self-center flex-shrink-0 w-12 h-12 border-[#C39C5D] border-2 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300" />
+                                        <img src={review.image} alt="" className="self-center flex-shrink-0 w-12 h-12 border-[#C39C5D] border-2 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300" />
                                         <div className="font-bold ">
-                                            <h4 className="text-lg font-semibold text-center md:text-left">Leroy Jenkins</h4>
-                                            <p className="flex gap-1 items-center">2.4<FaStar className="text-[#C39C5D]" /></p>
+                                            <h4 className="text-lg font-semibold text-center md:text-left">{review.name}</h4>
+                                            <p className="flex gap-1 items-center">{review.rating}<FaStar className="text-[#C39C5D]" /></p>
                                         </div>
                                     </div>
-                                    <p className="dark:text-gray-600"><span className="text-[#C39C5D]">Review:</span> Sed non nibh iaculis, posuere diam vitae, consectetur neque. Integer velit ligula, semper sed nisl in, cursus commodo elit. Pellentesque sit amet mi luctus ligula euismod lobortis ultricies et nibh.</p>
+                                    <p className="dark:text-gray-600"><span className="text-[#C39C5D]">Review:</span> {review.review}</p>
                                 </div>
-                            </div>
-                            <div className=" bg-[#1B1616] p-5 rounded-lg">
-                                <div className="flex flex-col space-y-4 md:space-y-0">
-                                    <div className="flex items-center mb-3 gap-3">
-                                        <img src="https://source.unsplash.com/75x75/?portrait" alt="" className="self-center flex-shrink-0 w-12 h-12 border-[#C39C5D] border-2 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300" />
-                                        <div className="font-bold ">
-                                            <h4 className="text-lg font-semibold text-center md:text-left">Leroy Jenkins</h4>
-                                            <p className="flex gap-1 items-center">2.4<FaStar className="text-[#C39C5D]" /></p>
-                                        </div>
-                                    </div>
-                                    <p className="dark:text-gray-600"><span className="text-[#C39C5D]">Review:</span> Sed non nibh iaculis, posuere diam vitae, consectetur neque. Integer velit ligula, semper sed nisl in, cursus commodo elit. Pellentesque sit amet mi luctus ligula euismod lobortis ultricies et nibh.</p>
-                                </div>
-                            </div>
+                            </div>)
+                        }
                         </div>
                     </section>
                 </div>
