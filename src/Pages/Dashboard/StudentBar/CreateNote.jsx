@@ -1,17 +1,38 @@
+import toast from "react-hot-toast";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import SectionTitle from "../../../Shared/SectionTitle";
 
 const CreateNote = () => {
+    const {user} = useAuth()
+    const axiosSecure = useAxiosSecure()
+
+    const handleCreateNote = e => {
+        e.preventDefault()
+        const form = e.target
+        const title = form.title.value
+        const email = form.email.value
+        const description = form.description.value
+        const createNote = {title, email, description}
+
+        axiosSecure.post('/note', createNote)
+        .then(res => {
+            if(res.data.insertedId){
+                toast.success('Create note successfully')
+            }
+        })
+    }
     return (
         <div>
             <SectionTitle heading='Create Note' subHeading='This Form is for Create your Note ' />
-            <form className="p-4">
+            <form onSubmit={handleCreateNote} className="p-4">
                 <div className="md:flex md:gap-2 lg:gap-0">
                     <div className="form-control md:w-1/2">
                         <label className="label">
                             <span className="label-text font-bold text-white">Title*</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="title" placeholder="Your note title" className="input input-bordered bg-gray-600 w-full" />
+                            <input type="text" name="title" placeholder="Your note title" className=" text-white input input-bordered bg-gray-600 w-full" />
                         </label>
                     </div>
                     <div className="form-control md:w-1/2 lg:ml-4">
@@ -19,7 +40,7 @@ const CreateNote = () => {
                             <span className="label-text font-bold text-white">Email*</span>
                         </label>
                         <label className="input-group">
-                            <input type="email" name="email" placeholder="Your email" className="input input-bordered font-sans bg-gray-600 w-full" />
+                            <input type="email" value={user?.email} name="email" placeholder="Your email" className="input text-white  input-bordered font-sans bg-gray-600 w-full" />
                         </label>
                     </div>
                 </div>
@@ -29,7 +50,7 @@ const CreateNote = () => {
                             <span className="label-text font-bold text-white">Description*</span>
                         </label>
                         <label className="input-group">
-                            <textarea name="description" placeholder="Description" rows="5" className="border-2 p-2 rounded-md bg-gray-600 text-white w-full"></textarea>
+                            <textarea name="description" placeholder="Description" rows="5"   className="border-2 p-2 rounded-md bg-gray-600 text-white w-full"></textarea>
                         </label>
                     </div>
                 </div>

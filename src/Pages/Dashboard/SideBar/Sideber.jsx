@@ -51,7 +51,6 @@ const Sideber = () => {
 
                         {/* Nav Items */}
                         <div className='flex flex-col justify-between flex-1 mt-6'>
-                            {/* Conditional toggle button here.. */}
 
                             {/*  Menu Items */}
                             <nav className='text-white'>
@@ -82,7 +81,7 @@ const Sideber = () => {
                                 </NavLink>
                                 {/* Manage personal notes */}
                                 <NavLink
-                                    to='my-listings'
+                                    to='personal-notes'
                                     className={({ isActive }) =>
                                         `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                                         }`
