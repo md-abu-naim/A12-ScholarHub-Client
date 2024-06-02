@@ -2,10 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
 
 const ViewBookedSessionDetails = () => {
     const [sassionsDetails, setSassionsDetails] = useState([])
     const { session_title } = useParams()
+    const { user } = useAuth()
     const sassions = sassionsDetails.find(sassion => sassion.sassion_title === session_title)
     const { sassion_title: title, tutor_name, rating, description,
         registration_start_date, registration_end_date, class_start_time,
@@ -15,6 +17,16 @@ const ViewBookedSessionDetails = () => {
         axios('/SassionCard.json')
             .then(res => setSassionsDetails(res.data))
     }, [])
+
+    const handleReview = e => {
+        e.preventDefault()
+        const form = e.target
+        const review = form.review.value
+        const rating = form.rating.value
+        const studentReview = { review, rating }
+        console.log(studentReview);
+        
+    }
     return (
         <div className='flex flex-col lg:flex-row justify-around gap-5  min-h-[calc(100vh-306px)] md:max-w-screen-xl mx-auto '>
             {/* Job Details */}
@@ -81,12 +93,23 @@ const ViewBookedSessionDetails = () => {
             {/* Place A Bid Form */}
             <div className="w-full">
                 <section className='p-6 border-[#C39C5D] border text-white rounded-md shadow-md flex-1 '>
-                    <h2 className='text-lg font-semibold capitalize '>
+                    <h2 className='text-2xl text-center font-semibold capitalize '>
                         Students Review*
                     </h2>
-                    <div className="flex items-center gap-3 mt-5">
-                        <img src="https://source.unsplash.com/75x75/?portrait" alt="" className="self-center flex-shrink-0 w-12 h-12 border-[#C39C5D] border-2 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300" />
-                        <input type="text" placeholder="Type here your review" className="input input-bordered input-md w-full bg-[#1B1616]" />
+                    <div className="flex flex-col items-center gap-3 mt-5">
+                        <img src={user?.photoURL} alt="" className="self-center flex-shrink-0 w-16 h-16 border-[#C39C5D] border-2 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300" />
+                        <form onSubmit={handleReview}>
+                            <div className="flex justify-between items-center gap-4 flex-col md:flex-row">
+                                <input type="text" name="review" placeholder="Type here your review" className="input input-bordered input-md w-full bg-[#1B1616]" />
+                                <input type="text" name="rating" placeholder="Type here your rating" className="input input-bordered input-md w-full bg-[#1B1616]" />
+                            </div>
+                            <div className="flex  items-center mt-4 justify-center">
+                                <button className="relative w-[200px] inline-flex items-center justify-start px-6 py-3 overflow-hidden font-medium transition-all bg-[#c59d5f] rounded hover:bg-[#c59d5f] group">
+                                    <span className="w-48 h-48 rounded rotate-[-40deg] bg-[#222222] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
+                                    <span className="relative text-center w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white italic">Submit Review</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     <div className="mt-8 space-y-4">
                         <div className=" bg-[#1B1616] p-5 rounded-lg">
