@@ -18,6 +18,7 @@ const CreateNote = () => {
         axiosSecure.post('/note', createNote)
         .then(res => {
             if(res.data.insertedId){
+                e.target.reset()
                 toast.success('Create note successfully')
             }
         })
