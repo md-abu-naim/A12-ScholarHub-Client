@@ -31,7 +31,7 @@ const Navber = () => {
                         <ul tabIndex={0} className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-[#C39C5D] text-black font-bold rounded-box w-52">
                             { user && isStudent && <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/view-booked-session' >Dashoard</Link></li>}
                             { user && isAdmin && <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/all-users' >Dashoard</Link></li>}
-                            { user && isAdmin && <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/all-users' >Dashoard</Link></li>}
+                            {/* { user && isAdmin && <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/all-users' >Dashoard</Link></li>} */}
                             <li className='hover:bg-black hover:text-white rounded-full' onClick={signOutUser}><Link to='/signIn'>Sign Out</Link></li>
                         </ul>
                     </div> :

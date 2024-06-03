@@ -17,6 +17,8 @@ import ManagePersonalNotes from "../Pages/Dashboard/StudentBar/ManagePersonalNot
 import UpdatePersonalNote from "../Pages/Dashboard/StudentBar/UpdatePersonalNote";
 import AllStudyMaterials from "../Pages/Dashboard/StudentBar/AllStudyMaterials";
 import AllUsers from "../Pages/Dashboard/AdminBar/AllUsers";
+import AllStudySession from "../Pages/Dashboard/AdminBar/AllStudySession";
+import AllMaterials from "../Pages/Dashboard/AdminBar/AllMaterials";
 
 
 const router = createBrowserRouter([
@@ -77,11 +79,19 @@ const router = createBrowserRouter([
                 path:'all-study-materials',
                 element: <PrivateRoutes><AllStudyMaterials /></PrivateRoutes>
             },
-            
+
             // admin Routes
             {
                 path:'all-users',
                 element: <PrivateRoutes><AllUsers /></PrivateRoutes>
+            },
+            {
+                path:'all-study-session',
+                element: <PrivateRoutes><AllStudySession /></PrivateRoutes>
+            },
+            {
+                path:'all-materials',
+                element: <PrivateRoutes><AllMaterials /></PrivateRoutes>
             },
         ]
     },

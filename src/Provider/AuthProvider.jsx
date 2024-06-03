@@ -63,7 +63,6 @@ const AuthProvider = ({ children }) => {
                     })
             }
             else {
-                // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
                 localStorage.removeItem('token');
             }
             setLoading(false);

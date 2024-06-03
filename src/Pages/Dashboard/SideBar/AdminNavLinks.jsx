@@ -21,7 +21,7 @@ const AdminNavLinks = () => {
 
             {/* View all study session */}
             <NavLink
-                to='create-note'
+                to='all-study-session'
                 className={({ isActive }) =>
                     `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                     }`
@@ -33,7 +33,7 @@ const AdminNavLinks = () => {
             </NavLink>
             {/* View all materials */}
             <NavLink
-                to='personal-notes'
+                to='all-materials'
                 className={({ isActive }) =>
                     `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
                     }`
