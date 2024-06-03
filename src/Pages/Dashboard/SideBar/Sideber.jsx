@@ -1,17 +1,20 @@
 import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
 import { FcSettings } from 'react-icons/fc'
-import { CiViewTimeline } from "react-icons/ci";
-import { MdManageAccounts } from "react-icons/md";
-import { FaBookBookmark } from "react-icons/fa6";
 import { AiOutlineBars } from 'react-icons/ai'
-import { IoCreateSharp } from "react-icons/io5";
 import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import useAuth from '../../../Hooks/useAuth';
+import useAdmin from '../../../Hooks/useAdmin';
+import StudentNavLinks from './StudentNavLinks'
+import AdminNavLinks from './AdminNavLinks'
+import useStudent from '../../../Hooks/useStudent'
 const Sideber = () => {
     const [isActive, setActive] = useState(false)
     const { logOutUser } = useAuth()
+    const [isStudent] = useStudent()
+    const [isAdmin] = useAdmin()
+    const {user} = useAuth()
 
     // Sidebar Responsive Handler
     const handleToggle = () => {
@@ -53,57 +56,10 @@ const Sideber = () => {
                         <div className='flex flex-col justify-between flex-1 mt-6'>
 
                             {/*  Menu Items */}
-                            <nav className='text-white'>
-                                {/* View booked session */}
-                                <NavLink
-                                    to='view-booked-session'
-                                    className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
-                                        }`
-                                    }
-                                >
-                                    <FaBookBookmark className='w-5 h-5' />
+                            {user && isStudent && <StudentNavLinks />}
 
-                                    <span className='mx-4 font-medium'>View booked session</span>
-                                </NavLink>
-
-                                {/* Creat note */}
-                                <NavLink
-                                    to='create-note'
-                                    className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
-                                        }`
-                                    }
-                                >
-                                    <IoCreateSharp className='w-5 h-5' />
-
-                                    <span className='mx-4 font-medium'>Create note</span>
-                                </NavLink>
-                                {/* Manage personal notes */}
-                                <NavLink
-                                    to='personal-notes'
-                                    className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
-                                        }`
-                                    }
-                                >
-                                    <MdManageAccounts className='w-5 h-5' />
-
-                                    <span className='mx-4 font-medium'>Manage personal notes</span>
-                                </NavLink>
-                                {/* View all study materials */}
-                                <NavLink
-                                    to='my-listings'
-                                    className={({ isActive }) =>
-                                        `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#0d0801]   hover:text-white ${isActive ? 'bg-[#f7ce8c]  text-black' : 'text-black'
-                                        }`
-                                    }
-                                >
-                                    <CiViewTimeline className='w-6 h-6' />
-
-                                    <span className='mx-4 font-medium'>View all study materials</span>
-                                </NavLink>
-                            </nav>
+                            {user && isAdmin && <AdminNavLinks />}
+                            
                         </div>
                     </div>
 

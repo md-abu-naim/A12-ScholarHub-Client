@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useStudent from "../Hooks/useStudent";
+import useAdmin from "../Hooks/useAdmin";
 
 const Navber = () => {
     const { user , logOutUser} = useAuth()
+    const [isStudent] = useStudent()
+    const [isAdmin] = useAdmin()
 
     const signOutUser = () => {
         logOutUser(() => {
@@ -17,19 +21,6 @@ const Navber = () => {
                 <Link to='/' className="btn btn-ghost font-bold text-xl md:text-3xl"> ScholarHub </Link>
             </div>
             <div className="navbar-end">
-                {/* <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-14 rounded-full">
-                            <img className="w-20" alt="User Profile" src={user?.photoURL} />
-                        </div>
-                    </div>
-                    <ul tabIndex={0} className="menu menu-sm font-bold dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><Link to='/dashboard/view-booked-session'>Dashboard</Link></li>
-                        <li><Link to='/signIn'>SignIn</Link></li>
-                        <li><Link to='/signUp'>SignUp</Link></li>
-                        <li><a>Logout</a></li>
-                    </ul>
-                </div> */}
                 {
                     user ? <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -38,7 +29,9 @@ const Navber = () => {
                             </div>
                         </div>
                         <ul tabIndex={0} className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-[#C39C5D] text-black font-bold rounded-box w-52">
-                            <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/view-booked-session' >Dashoard</Link></li>
+                            { user && isStudent && <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/view-booked-session' >Dashoard</Link></li>}
+                            { user && isAdmin && <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/all-users' >Dashoard</Link></li>}
+                            { user && isAdmin && <li className='hover:bg-black hover:text-white rounded-full'><Link to='/dashboard/all-users' >Dashoard</Link></li>}
                             <li className='hover:bg-black hover:text-white rounded-full' onClick={signOutUser}><Link to='/signIn'>Sign Out</Link></li>
                         </ul>
                     </div> :

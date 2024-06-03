@@ -15,6 +15,7 @@ import ViewBookedSessionDetails from "../Pages/Dashboard/StudentBar/ViewBookedSe
 import PrivateRoutes from "./PrivateRoutes";
 import ManagePersonalNotes from "../Pages/Dashboard/StudentBar/ManagePersonalNotes";
 import UpdatePersonalNote from "../Pages/Dashboard/StudentBar/UpdatePersonalNote";
+import AllStudyMaterials from "../Pages/Dashboard/StudentBar/AllStudyMaterials";
 
 
 const router = createBrowserRouter([
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
             {
                 path:'manage-note/:id',
                 element: <PrivateRoutes><UpdatePersonalNote /></PrivateRoutes>
+            },
+            {
+                path:'all-study-materials',
+                element: <PrivateRoutes><AllStudyMaterials /></PrivateRoutes>
             },
         ]
     },

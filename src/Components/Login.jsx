@@ -39,7 +39,7 @@ const Login = () => {
                 const userInfo = {
                     name: result?.user?.displayName,
                     email: result?.user?.email,
-                    role: 'student',
+                    role: 'Student',
                     image: result?.user?.photoURL
                 }
                 axiosCommon.post('/users', userInfo)
@@ -64,7 +64,7 @@ const Login = () => {
                 const userInfo = {
                     name: result?.user?.displayName,
                     email: result?.user?.email,
-                    role: 'student',
+                    role: 'Student',
                     image: result?.user?.photoURL
                 }
                 axiosCommon.post('/users', userInfo)

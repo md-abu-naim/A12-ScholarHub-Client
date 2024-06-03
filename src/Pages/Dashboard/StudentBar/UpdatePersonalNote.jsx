@@ -35,7 +35,7 @@ const UpdatePersonalNote = () => {
 
     return (
         <div>
-            <SectionTitle heading='Create Note' subHeading='This Form is for Create your Note ' />
+            <SectionTitle heading='update personal Note' subHeading='Update your personal Note ' />
             <form onSubmit={handleCreateNote} className="p-4">
                 <div className="md:flex md:gap-2 lg:gap-0">
                     <div className="form-control md:w-1/2">

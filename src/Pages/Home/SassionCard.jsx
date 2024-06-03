@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const SassionCard = () => {
     const [sessions, setSassions] = useState([])
-    const newDate = new Date().toLocaleDateString()
+    // const newDate = new Date().toLocaleDateString()
     // const axiosCommon = useAxiosCommon()
     // const {data: study = []} = useQuery({
     //     queryKey: ['study'],
@@ -47,7 +47,7 @@ const SassionCard = () => {
                         </div>
                     </div>
                     <div className="flex items-end justify-end mt-4"> 
-                        <Link to={`/${session.sassion_title}`} ><CommonBtn title={session.registration_end_date >= newDate ? ' Ongoing' : 'closed' } /></Link>
+                        <Link to={`/${session.sassion_title}`} ><CommonBtn title={session.registration_end_date > new Date().toISOString() ? ' closed' : 'Ongoing' } /></Link>
                     </div>
                 </div>)
             }
