@@ -14,6 +14,7 @@ import ErrorPage from "../Shared/ErrorPage";
 import ViewBookedSessionDetails from "../Pages/Dashboard/StudentBar/ViewBookedSessionDetails";
 import PrivateRoutes from "./PrivateRoutes";
 import ManagePersonalNotes from "../Pages/Dashboard/StudentBar/ManagePersonalNotes";
+import UpdatePersonalNote from "../Pages/Dashboard/StudentBar/UpdatePersonalNote";
 
 
 const router = createBrowserRouter([
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
             {
                 path:'personal-notes',
                 element: <PrivateRoutes><ManagePersonalNotes /></PrivateRoutes>
+            },
+            {
+                path:'manage-note/:id',
+                element: <PrivateRoutes><UpdatePersonalNote /></PrivateRoutes>
             },
         ]
     },

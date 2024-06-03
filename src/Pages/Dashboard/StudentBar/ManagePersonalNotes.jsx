@@ -7,20 +7,51 @@ import { MdDeleteForever } from "react-icons/md";
 import { MdOutlineBrowserUpdated } from "react-icons/md";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 
 const ManagePersonalNotes = () => {
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
 
-    const { data: notes = [], } = useQuery({
+    const { data: notes = [], refetch } = useQuery({
         queryKey: ['tutors', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/notes/${user?.email}`)
-            console.log(data);
             return data
         }
     })
+
+    const handleDelete = id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            background: "black",
+            color: "white"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/note/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Note has been deleted.",
+                                icon: "success",
+                                background: "black",
+                                color: 'white'
+                            });
+                        }
+                    })
+            }
+        });
+    }
     return (
         <>
             <SectionTitle heading='manage personal notes' subHeading='This is personal notes' />
@@ -40,12 +71,12 @@ const ManagePersonalNotes = () => {
                             </div>
                         </div>
                         <div className="flex items-center justify-between mt-4">
-                            <Link ><CommonBtn title={<MdOutlineBrowserUpdated className="text-xl" />} /></Link>
-                            <button ><CommonBtn title={<MdDeleteForever className="text-xl" />} /></button>
+                            <Link to={`/dashboard/manage-note/${note._id}`}><CommonBtn title={<MdOutlineBrowserUpdated className="text-xl" />} /></Link>
+                            <button onClick={() => handleDelete(note._id)} ><CommonBtn title={<MdDeleteForever className="text-xl" />} /></button>
                         </div>
                     </div>)
                 }
-            </div>
+            </div >
         </>
     );
 };
