@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SectionTitle from "../../../Shared/SectionTitle";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 const UpdateRole = () => {
     const axiosSecure = useAxiosSecure()
     const { id } = useParams()
+    const navigate = useNavigate()
 
     const { data: updateUser = [], refetch } = useQuery({
         queryKey: ['updateUser',],
@@ -16,18 +17,27 @@ const UpdateRole = () => {
         }
     })
 
+    console.log(updateUser.role);
+
     const handleUpdateRole = (e) => {
         e.preventDefault()
         const roleText = e.target.role.value
-        const name = e.target.name.value
+        const name = e.target.name.value;
+
+        if(updateUser.role === roleText){
+            return toast.success(`${name} Already is there as a ${updateUser.role}`)
+        }
+
         const updateInfo = {
             role: roleText
         }
-        console.log(updateInfo);
         axiosSecure.put(`/user/${id}`, updateInfo)
             .then(res => {
-                refetch()
-                if(res.data.modifiedCount > 0) return toast.success(`Congrats ${name} has become an ${roleText}!🤩`)
+                if(res.data.modifiedCount > 0) {
+                    refetch()
+                    toast.success(`Congrats ${name} has become an ${roleText}!🤩`)
+                    navigate('/dashboard/all-users')
+                }
             })
     }
     return (

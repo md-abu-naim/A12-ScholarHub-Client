@@ -9,13 +9,16 @@ import useAdmin from '../../../Hooks/useAdmin';
 import StudentNavLinks from './StudentNavLinks'
 import AdminNavLinks from './AdminNavLinks'
 import useStudent from '../../../Hooks/useStudent'
+import useTutor from '../../../Hooks/useTutor'
+import TutorNavLinks from './TutorNavLinks'
 const Sideber = () => {
     const [isActive, setActive] = useState(false)
     const { logOutUser } = useAuth()
     const [isStudent] = useStudent()
+    const [isTutor] = useTutor()
     const [isAdmin] = useAdmin()
     const {user} = useAuth()
-
+    
     // Sidebar Responsive Handler
     const handleToggle = () => {
         setActive(!isActive)
@@ -57,7 +60,7 @@ const Sideber = () => {
 
                             {/*  Menu Items */}
                             {user && isStudent && <StudentNavLinks />}
-
+                            {user && isTutor && <TutorNavLinks />}
                             {user && isAdmin && <AdminNavLinks />}
                             
                         </div>

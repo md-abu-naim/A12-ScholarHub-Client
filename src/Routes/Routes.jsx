@@ -20,6 +20,10 @@ import AllUsers from "../Pages/Dashboard/AdminBar/AllUsers";
 import AllStudySession from "../Pages/Dashboard/AdminBar/AllStudySession";
 import AllMaterials from "../Pages/Dashboard/AdminBar/AllMaterials";
 import UpdateRole from "../Pages/Dashboard/AdminBar/UpdateRole";
+import CreateSession from "../Pages/Dashboard/TutorBar/CreateSession";
+import MyAllSession from "../Pages/Dashboard/TutorBar/MyAllSession";
+import UploadMaterials from "../Pages/Dashboard/TutorBar/UploadMaterials";
+import MyAllMaterials from "../Pages/Dashboard/TutorBar/MyAllMaterials";
 
 
 const router = createBrowserRouter([
@@ -55,7 +59,7 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <PrivateRoutes><Dashboard /></PrivateRoutes>,
         children: [
-            // student routes
+            // Student Routes
             {
                 path:'view-booked-session',
                 element: <PrivateRoutes><ViewBookedSession /></PrivateRoutes>
@@ -81,7 +85,25 @@ const router = createBrowserRouter([
                 element: <PrivateRoutes><AllStudyMaterials /></PrivateRoutes>
             },
 
-            // admin Routes
+            // Tutor Routes
+            {
+                path:'create-session',
+                element: <PrivateRoutes><CreateSession /></PrivateRoutes>
+            },
+            {
+                path:'my-all-sessions',
+                element: <PrivateRoutes><MyAllSession /></PrivateRoutes>
+            },
+            {
+                path:'upload-materials',
+                element: <PrivateRoutes><UploadMaterials /></PrivateRoutes>
+            },
+            {
+                path:'my-all-materials',
+                element: <PrivateRoutes><MyAllMaterials /></PrivateRoutes>
+            },
+
+            // Admin Routes
             {
                 path:'all-users',
                 element: <PrivateRoutes><AllUsers /></PrivateRoutes>
