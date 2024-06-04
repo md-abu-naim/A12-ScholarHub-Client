@@ -38,6 +38,8 @@ const SignUp = () => {
                 console.log(result.user);
                 updateUser(name, photo)
                     .then(() => {
+                        navigate('/')
+                        toast.success('User signUp successfully')
                         const userInfo = {
                             name: result?.user?.displayName,
                             email: result?.user?.email,
@@ -46,10 +48,8 @@ const SignUp = () => {
                         }
                         axiosCommon.post('/users', userInfo)
                             .then(res => {
-                                console.log(res.data);
                                 if (res.data.insertedId) {
-                                    toast.success('User SignUp & added to DB successfully')
-                                    return navigate('/')
+                                    console.log(res.data);
                                 }
                             })
                     })

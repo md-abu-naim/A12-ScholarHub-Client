@@ -19,6 +19,7 @@ import AllStudyMaterials from "../Pages/Dashboard/StudentBar/AllStudyMaterials";
 import AllUsers from "../Pages/Dashboard/AdminBar/AllUsers";
 import AllStudySession from "../Pages/Dashboard/AdminBar/AllStudySession";
 import AllMaterials from "../Pages/Dashboard/AdminBar/AllMaterials";
+import UpdateRole from "../Pages/Dashboard/AdminBar/UpdateRole";
 
 
 const router = createBrowserRouter([
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
             {
                 path:'all-materials',
                 element: <PrivateRoutes><AllMaterials /></PrivateRoutes>
+            },
+            {
+                path:'update-role/:id',
+                element: <PrivateRoutes><UpdateRole /></PrivateRoutes>
             },
         ]
     },

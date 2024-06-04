@@ -19,7 +19,7 @@ const AllUsers = () => {
     }
 
     const { data: allUsers = [], refetch, isLoading  } = useQuery({
-        queryKey: ['tutors', search],
+        queryKey: ['allUsers', search],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/all-users?search=${search}`)
             return data
@@ -69,7 +69,7 @@ const AllUsers = () => {
                                 </thead>
                                 <tbody>
                                     {
-                                      isLoading ? <PropagateLoader color="#36d7b7" />  :  allUsers?.map(user => <UsersTable key={user._id} user={user} />)
+                                      isLoading ? <PropagateLoader color="#36d7b7" />  :  allUsers?.map(user => <UsersTable key={user._id} refetch={refetch} user={user} />)
                                     }
                                 </tbody>
                             </table>
