@@ -3,26 +3,28 @@ import SectionTitle from "../../../Shared/SectionTitle";
 import UsersTable from "./UsersTable";
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { PropagateLoader} from 'react-spinners'
 
 const AllUsers = () => {
     const [search, setSearch] = useState('')
     const axiosSecure = useAxiosSecure()
 
-    const { data: AllUsers = [], refetch } = useQuery({
-        queryKey: ['tutors',],
+
+    const handleSearch = e => {
+        e.preventDefault()
+        const text = e.target.search.value
+        setSearch(text)
+        refetch()
+        e.target.reset()
+    }
+
+    const { data: allUsers = [], refetch, isLoading  } = useQuery({
+        queryKey: ['tutors', search],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/all-users?search=${search}`)
             return data
         }
     })
-    const handleSearch = e => {
-        e.preventDefault()
-        const text = e.target.search.value
-        setSearch(text)
-        e.target.reset()
-        refetch()
-        console.log(text);
-    }
     return (
         <div>
             <SectionTitle heading='view all users' subHeading='This is our all users page' />
@@ -49,13 +51,13 @@ const AllUsers = () => {
                                             scope='col'
                                             className='px-5 py-3 bg-[#222222]  border-b border-[#c59d5f] text-white  text-left text-sm uppercase font-normal'
                                         >
-                                           User Email
+                                            User Email
                                         </th>
                                         <th
                                             scope='col'
                                             className='px-5 py-3 bg-[#222222]  border-b border-[#c59d5f] text-white  text-left text-sm uppercase font-normal'
                                         >
-                                           User Role
+                                            User Role
                                         </th>
                                         <th
                                             scope='col'
@@ -67,7 +69,7 @@ const AllUsers = () => {
                                 </thead>
                                 <tbody>
                                     {
-                                        AllUsers.map(user => <UsersTable key={user._id} user={user} />)
+                                      isLoading ? <PropagateLoader color="#36d7b7" />  :  allUsers?.map(user => <UsersTable key={user._id} user={user} />)
                                     }
                                 </tbody>
                             </table>
