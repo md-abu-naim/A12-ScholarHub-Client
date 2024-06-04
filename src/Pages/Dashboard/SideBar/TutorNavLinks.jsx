@@ -17,7 +17,7 @@ const TutorNavLinks = () => {
             >
                 <IoCreateSharp className='w-5 h-5' />
 
-                <span className='mx-4 font-medium'> View all study sessions</span>
+                <span className='mx-4 font-medium'>Create study session</span>
             </NavLink>
 
             {/* View all study sessions */}
