@@ -3,26 +3,43 @@ import useAuth from "../../../Hooks/useAuth";
 import SectionTitle from "../../../Shared/SectionTitle";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const CreateSession = () => {
     const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const { user } = useAuth()
+    const axiosSecure = useAxiosSecure()
 
     const handleAddFoodItem = e => {
         e.preventDefault()
         const form = e.target
-        const name = form.name.value
-        const price = form.price.value
-        const made_by = user?.displayName
-        const email = user?.email
-        const quantity = form.quantity.value
-        const food_origin = form.food_origin.value
-        const category = form.category.value
-        const image = form.image.value
+        const session_title = form.session_title.value
+        const tutor_name = user?.displayName
         const description = form.description.value
-        const food = { name, price, made_by, email, food_origin, quantity, category, image, description }
-        console.log(food);
-        e.target.reset()
+        const registration_start_date = startDate.toLocaleDateString()
+        const registration_end_date = endDate.toLocaleDateString()
+        const class_start_time = form.session_title.value
+        const class_end_time = form.session_title.value
+        const session_duration = form.session_duration.value
+        const registration_fee = form.registration_fee.value
+        const category = form.category.value
+        const status = form.status.value
+        const tutor_email = user?.email
+        const session = {session_title, tutor_name, description, registration_start_date,
+            registration_end_date, class_start_time, class_end_time, session_duration, 
+            registration_fee, category, status, tutor_email
+        }
+        console.log(session);
+
+        axiosSecure.post('/session', session)
+        .then(res => {
+            if(res.data.insertedId) {
+                e.target.reset()
+                toast.success('Create session successfully')
+            }
+        })
     }
     return (
         <div>
@@ -34,7 +51,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Session Title</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="title" placeholder="Session Title" className="input input-bordered bg-[#1B1616] text-white w-full" />
+                            <input type="text" name="session_title" placeholder="Session Title" className="input input-bordered bg-[#1B1616] text-white w-full" />
                         </label>
                     </div>
                     <div className="form-control md:w-1/2 lg:ml-4">
@@ -42,7 +59,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Registration Fee </span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="registration_fee" placeholder="Registration Fee" className="input input-bordered font-sans bg-[#1B1616] text-white w-full" />
+                            <input type="text" name="registration_fee" value='0' placeholder="Registration Fee" className="input input-bordered font-sans bg-[#1B1616] text-white w-full" />
                         </label>
                     </div>
                 </div>
@@ -52,7 +69,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Tutor Name</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" value={user?.displayName} name="buyer_name" placeholder="Buyer Name" className="input bg-[#1B1616] text-white input-bordered w-full" />
+                            <input type="text" value={user?.displayName} name="tutor_name" placeholder="Buyer Name" className="input bg-[#1B1616] text-white input-bordered w-full" />
                         </label>
                     </div>
                     <div className="form-control md:w-1/2 lg:ml-4">
@@ -60,7 +77,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Tutor Email</span>
                         </label>
                         <label className="input-group">
-                            <input type="email" value={user?.email} name="buyer_email" placeholder="Email" className="input bg-[#1B1616] input-bordered text-white w-full" />
+                            <input type="email" value={user?.email} name="tutor_email" placeholder="Email" className="input bg-[#1B1616] input-bordered text-white w-full" />
                         </label>
                     </div>
                 </div>
@@ -75,7 +92,7 @@ const CreateSession = () => {
                         <label className="label">
                             <span className="label-text font-bold text-white">Registration end date</span>
                         </label>
-                        <DatePicker className="bg-[#1B1616] text-white p-3 rounded-md w-full" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <DatePicker className="bg-[#1B1616] text-white p-3 rounded-md w-full" selected={endDate} onChange={(date) => setEndDate(date)} />
                     </div>
                 </div>
                 <div className="md:flex md:gap-2 lg:gap-0 md:mb-5">
@@ -84,7 +101,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Class Start Date</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="buyer_name" placeholder="Class Start Date" className="input bg-[#1B1616] text-white input-bordered w-full" />
+                            <input type="text" name="class_start_time" placeholder="Class Start Date" className="input bg-[#1B1616] text-white input-bordered w-full" />
                         </label>
                     </div>
                     <div className="form-control md:w-1/2 lg:ml-4">
@@ -92,7 +109,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Class End Date</span>
                         </label>
                         <label className="input-group">
-                            <input type="email" name="buyer_email" placeholder="Class End Date" className="input bg-[#1B1616] input-bordered text-white w-full" />
+                            <input type="text" name="class_end_time" placeholder="Class End Date" className="input bg-[#1B1616] input-bordered text-white w-full" />
                         </label>
                     </div>
                 </div>
@@ -102,7 +119,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Session Duration</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="image" placeholder="Session Duration" className="text-white input bg-[#1B1616] input-bordered w-full" />
+                            <input type="text" name="session_duration" placeholder="Session Duration" className="text-white input bg-[#1B1616] input-bordered w-full" />
                         </label>
                     </div>
                     <div className="form-control md:w-1/2 lg:ml-4">
@@ -110,7 +127,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Status</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" name="image" defaultValue='Pending' placeholder="Session Duration" className="text-white input bg-[#1B1616] input-bordered w-full" />
+                            <input type="text" name="status" defaultValue='Pending' placeholder="Session Duration" className="text-white input bg-[#1B1616] input-bordered w-full" />
                         </label>
                     </div>
                 </div>

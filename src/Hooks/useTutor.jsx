@@ -13,7 +13,6 @@ const useTutor = () => {
             return res.data?.tutor;
         }
     })
-    console.log(isTutor);
     return [isTutor]
 };
 

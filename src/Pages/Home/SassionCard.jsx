@@ -37,7 +37,7 @@ const SassionCard = () => {
 
                         <div>
                             <h1 className='mt-2 text-lg font-semibold text-white '>
-                                {session.sassion_title}
+                                {session.session_title}
                             </h1>
 
                             <p className='mt-2 text-sm text-white '>

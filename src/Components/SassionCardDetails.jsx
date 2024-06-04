@@ -12,7 +12,7 @@ const SassionCardDetails = () => {
     const [isAdmin] = useAdmin()
     const axiosSecure = useAxiosSecure()
     const sassions = sassionsDetails.find(sassion => sassion.sassion_title === sassion_title)
-    const { sassion_title: title, tutor_name, description,
+    const { session_title: title, tutor_name, description,
         registration_start_date, registration_end_date, class_start_time,
         class_end_time, session_duration, registration_fee, category } = sassions || {}
 

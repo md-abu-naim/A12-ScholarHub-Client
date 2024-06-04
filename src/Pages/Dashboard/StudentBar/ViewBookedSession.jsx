@@ -51,7 +51,7 @@ const ViewBookedSession = () => {
                             </div>
                         </div>
                         <div className="flex bottom-0 flex-grow items-end justify-end mt-4">
-                            <Link to={`/dashboard/booked-session/${sassion.sassion_title}`} ><CommonBtn title=' Details' /></Link>
+                            <Link to={`/dashboard/booked-session/${sassion.session_title}`} ><CommonBtn title=' Details' /></Link>
                         </div>
                     </div>)
                 }
