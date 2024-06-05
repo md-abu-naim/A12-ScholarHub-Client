@@ -31,7 +31,6 @@ const CreateSession = () => {
             registration_end_date, class_start_time, class_end_time, session_duration, 
             registration_fee, category, status, tutor_email
         }
-        console.log(session);
 
         axiosSecure.post('/session', session)
         .then(res => {

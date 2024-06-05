@@ -5,10 +5,12 @@ import { useParams } from "react-router-dom";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAdmin from "../Hooks/useAdmin";
+import useTutor from "../Hooks/useTutor";
 
 const SassionCardDetails = () => {
     const [sassionsDetails, setSassionsDetails] = useState([])
     const { sassion_title } = useParams()
+    const [isTutor] = useTutor()
     const [isAdmin] = useAdmin()
     const axiosSecure = useAxiosSecure()
     const sassions = sassionsDetails.find(sassion => sassion.sassion_title === sassion_title)
@@ -82,7 +84,7 @@ const SassionCardDetails = () => {
                                 </p>
                             </div>
                         </div>
-                        <button onClick={handleBook} disabled={registration_end_date >= new Date().toISOString() || isAdmin} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
+                        <button onClick={handleBook} disabled={registration_end_date >= new Date().toISOString() || isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
                             <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
                             <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
                             <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
