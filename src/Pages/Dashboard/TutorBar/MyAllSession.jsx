@@ -3,19 +3,37 @@ import CommonBtn from "../../../Shared/CommonBtn";
 import { useQuery } from '@tanstack/react-query'
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import ViewReasion from "./Modals/ViewReasion";
+import { useState } from "react";
+import NewReques from "./Modals/NewReques";
 
 const MyAllSession = () => {
-    const {user} = useAuth()
+    const [sessionId, setSessionId] = useState('')
+    const [reason, setReason] = useState('')
+    const [feedback, setFeedback] = useState('')
+    const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
-    const {data: allSessions = []} = useQuery({
+    const { data: allSessions = [] } = useQuery({
         queryKey: ['allSessions', user?.email],
-        queryFn: async() => {
-            const {data} = await axiosSecure.get(`/sessions/${user?.email}`)
-            console.log(data);
+        queryFn: async () => {
+            const { data } = await axiosSecure.get(`/sessions/${user?.email}`)
             return data
         }
     })
+console.log(sessionId);
+console.log(reason, feedback);
+    const handleRejectModal = (id, reason, feedback) => {
+        setFeedback(feedback)
+        setReason(reason)
+        setSessionId(id)
+        document.getElementById('my_modal_3').showModal()
+    }
+
+    const handleApproveModal = (id) => {
+        setSessionId(id)
+        document.getElementById('my_modal_2').showModal()
+    }
 
     return (
         <div>
@@ -29,7 +47,7 @@ const MyAllSession = () => {
                                     Registration end: {session.registration_end_date}
                                 </span>
                                 <span className='text-xs font-light bg-[#C39C5D] rounded-full px-2 text-black '>
-                                    {session.status}...
+                                    {session.status}{session.status === "Pending" && '...'}
                                 </span>
                             </div>
 
@@ -45,7 +63,11 @@ const MyAllSession = () => {
                             </div>
                         </div>
                         <div className="flex items-end justify-end mt-4">
-                            <CommonBtn  title='New Request' />
+                            { session.status === "Rejected" ? <button onClick={() => handleRejectModal(session._id, session.reason, session.feedback)}><CommonBtn title= "View Rejected" /></button> :
+                             <button onClick={() => handleApproveModal(session._id)}><CommonBtn title= 'New Request' /></button>}
+
+                            <ViewReasion />
+                            <NewReques />
                         </div>
                     </div>)
                 }

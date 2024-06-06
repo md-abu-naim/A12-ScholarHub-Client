@@ -6,15 +6,26 @@ import { FcApprove, FcDisapprove } from "react-icons/fc";
 import { useState } from "react";
 import Approve from "./Modals/Approve";
 import toast from "react-hot-toast";
-// import Approve from "./Modals/Approve";
+import Reject from "./Modals/Reject";
 
 const AllStudySession = () => {
     const [approveId, setApproveId] = useState('')
+    const [title, setTitle] = useState('')
     const axiosSecure = useAxiosSecure()
 
-    const handleModal = (id) => {
+
+    const handleApproveModal = (id, title) => {
+        setTitle(title);
         setApproveId(id)
+        console.log(id, title);
         document.getElementById('my_modal_3').showModal()
+    }
+
+    const handleRejectModal = (id, title) => {
+        setTitle(title);
+        setApproveId(id)
+        console.log(id, title);
+        document.getElementById('my_modal_2').showModal()
     }
 
     const { data: allSessions = [], refetch } = useQuery({
@@ -25,7 +36,9 @@ const AllStudySession = () => {
         }
     })
 
-    const handleClick = (e) => {
+    const sessions = allSessions.filter(session => session.status !== "Rejected")
+
+    const handleApprove = (e) => {
         e.preventDefault()
         const registration_fee = e.target.registration_fee.value
         const status = 'Approve'
@@ -45,19 +58,42 @@ const AllStudySession = () => {
                 }
             })
     }
+
+    const handleReject = e => {
+        e.preventDefault()
+        const id = approveId
+        const form = e.target
+        const reason = form.reason.value
+        const feedback = form.feedback.value
+        const updateInfo = {
+            status: 'Rejected',
+            reason: reason,
+            feedback: feedback
+        }
+        
+        e.target.reset()
+        axiosSecure.put(`/session/${id}`, updateInfo)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    toast.success('Session has been Rejected!☺')
+                }
+            })
+    }
     return (
         <div>
             <SectionTitle heading='view all study session' subHeading='This is our all study session page' />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 {
-                    allSessions.map((session, i) => <div key={i} className='w-full rel max-h-[300px] max-w-md  px-4 py-3 bg-[#1B1616] rounded-md shadow-md hover:scale-[1.05] transition-all flex flex-col'>
+                  sessions.map((session, i) => <div key={i} className='w-full rel max-h-[300px] max-w-md  px-4 py-3 bg-[#1B1616] rounded-md shadow-md hover:scale-[1.05] transition-all flex flex-col'>
                         <div className="flex-grow">
                             <div className='flex items-center justify-between'>
                                 <span className='text-xs font-light text-white '>
                                     Registration end: {session.registration_end_date}
                                 </span>
                                 <span className='text-xs font-light bg-[#C39C5D] rounded-full px-2 text-black '>
-                                    {session.status}...
+                                    {session.status}{session.status === "Pending" && '...'}
                                 </span>
                             </div>
 
@@ -73,22 +109,11 @@ const AllStudySession = () => {
                             </div>
                         </div>
                         <div className="flex items-center justify-between mt-4">
-                            <button onClick={() => handleModal(session._id)} title="Approve Session"><CommonBtn title={<FcApprove className="text-2xl " />} /></button>
-                            <button title="Reject Session"><CommonBtn title={<FcDisapprove className="text-xl" />} /></button>
+                            <button onClick={() => handleApproveModal(session._id, session.session_title)} title="Approve Session"><CommonBtn title={<FcApprove className="text-2xl " />} /></button>
+                            <button onClick={() => handleRejectModal(session._id, session.session_title)} title="Reject Session"><CommonBtn title={<FcDisapprove className="text-xl" />} /></button>
                         </div>
-                        {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                        {/* <button className="btn">open modal</button> */}
-                        {/* <dialog id="my_modal_3" className="modal">
-                            <div className="modal-box">
-                                <form method="dialog">
-                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                </form>
-                                <h3 className="font-bold text-lg">Hello!</h3>
-                                <p className="py-4">Press ESC key or click on ✕ button to close</p>
-                                <button onClick={ handleClick}>onClick</button>
-                            </div>
-                        </dialog> */}
-                        <Approve handleClick={handleClick} title={session.session_title} />
+                        <Approve handleApprove={handleApprove} title={title} />
+                        <Reject handleReject={handleReject} title={title} />
                     </div>)
                 }
             </div>
