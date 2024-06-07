@@ -7,6 +7,10 @@ import { useState } from "react";
 import Approve from "./Modals/Approve";
 import toast from "react-hot-toast";
 import Reject from "./Modals/Reject";
+import { MdDeleteForever, MdOutlineBrowserUpdated } from "react-icons/md";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 const AllStudySession = () => {
     const [approveId, setApproveId] = useState('')
@@ -82,6 +86,38 @@ const AllStudySession = () => {
                 }
             })
     }
+
+    const handleDelete = id => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            background: "black",
+            color: "white"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/session/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Note has been deleted.",
+                                icon: "success",
+                                background: "black",
+                                color: 'white'
+                            });
+                        }
+                    })
+            }
+        });
+    }
     return (
         <div>
             <SectionTitle heading='view all study session' subHeading='This is our all study session page' />
@@ -110,8 +146,10 @@ const AllStudySession = () => {
                             </div>
                         </div>
                         <div className="flex items-center justify-between mt-4">
-                            <button onClick={() => handleApproveModal(session._id, session.session_title)} title="Approve Session"><CommonBtn title={<FcApprove className="text-2xl " />} /></button>
-                            <button onClick={() => handleRejectModal(session._id, session.session_title)} title="Reject Session"><CommonBtn title={<FcDisapprove className="text-xl" />} /></button>
+                            {session.status === "Approved" ? <><Link to={`/dashboard/update-session/${session._id}`}  title="Update Session"><CommonBtn title={<MdOutlineBrowserUpdated className="text-2xl " />} /></Link>
+                            <button onClick={() => handleDelete(session._id)} title="Delete Session"><CommonBtn title={<MdDeleteForever className="text-xl" />} /></button></> :
+                            <><button onClick={() => handleApproveModal(session._id, session.session_title)} title="Approve Session"><CommonBtn title={<FcApprove className="text-2xl " />} /></button>
+                            <button onClick={() => handleRejectModal(session._id, session.session_title)} title="Reject Session"><CommonBtn title={<FcDisapprove className="text-xl" />} /></button></>}
                         </div>
                         <Approve handleApprove={handleApprove} title={title} />
                         <Reject handleReject={handleReject} title={title} />

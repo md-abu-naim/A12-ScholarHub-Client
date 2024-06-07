@@ -25,6 +25,7 @@ import MyAllSession from "../Pages/Dashboard/TutorBar/MyAllSession";
 import UploadMaterials from "../Pages/Dashboard/TutorBar/UploadMaterials";
 import MyAllMaterials from "../Pages/Dashboard/TutorBar/MyAllMaterials";
 import Profile from "../Pages/Dashboard/Profile/Profile";
+import UpdateSession from "../Pages/Dashboard/AdminBar/UpdateSession";
 
 
 const router = createBrowserRouter([
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
             {
                 path:'all-study-session',
                 element: <PrivateRoutes><AllStudySession /></PrivateRoutes>
+            },
+            {
+                path:'update-session/:id',
+                element: <PrivateRoutes><UpdateSession /></PrivateRoutes>
             },
             {
                 path:'all-materials',
