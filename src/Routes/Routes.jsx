@@ -26,6 +26,9 @@ import UploadMaterials from "../Pages/Dashboard/TutorBar/UploadMaterials";
 import MyAllMaterials from "../Pages/Dashboard/TutorBar/MyAllMaterials";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import UpdateSession from "../Pages/Dashboard/AdminBar/UpdateSession";
+import Payment from "../Components/Payment/Payment";
+import AdminRoute from "./AdminRoute";
+import TutorRoute from "./TutorRoute";
 
 
 const router = createBrowserRouter([
@@ -46,7 +49,10 @@ const router = createBrowserRouter([
                 path: '/:id',
                 element: <PrivateRoutes><SassionCardDetails /></PrivateRoutes>
             },
-
+            {
+                path: 'payment',
+                element: <PrivateRoutes><Payment /></PrivateRoutes>
+            },
         ]
     },
     {
@@ -95,29 +101,29 @@ const router = createBrowserRouter([
             // Tutor Routes
             {
                 path:'create-session',
-                element: <PrivateRoutes><CreateSession /></PrivateRoutes>
+                element: <TutorRoute><PrivateRoutes><CreateSession /></PrivateRoutes></TutorRoute>
             },
             {
                 path:'my-all-sessions',
-                element: <PrivateRoutes><MyAllSession /></PrivateRoutes>
+                element: <TutorRoute><PrivateRoutes><MyAllSession /></PrivateRoutes></TutorRoute>
             },
             {
                 path:'upload-materials',
-                element: <PrivateRoutes><UploadMaterials /></PrivateRoutes>
+                element: <TutorRoute><PrivateRoutes><UploadMaterials /></PrivateRoutes></TutorRoute>
             },
             {
                 path:'my-all-materials',
-                element: <PrivateRoutes><MyAllMaterials /></PrivateRoutes>
+                element: <TutorRoute><PrivateRoutes><MyAllMaterials /></PrivateRoutes></TutorRoute>
             },
 
             // Admin Routes
             {
                 path:'all-users',
-                element: <PrivateRoutes><AllUsers /></PrivateRoutes>
+                element: <AdminRoute><PrivateRoutes><AllUsers /></PrivateRoutes></AdminRoute>
             },
             {
                 path:'all-study-session',
-                element: <PrivateRoutes><AllStudySession /></PrivateRoutes>
+                element: <AdminRoute><PrivateRoutes><AllStudySession /></PrivateRoutes></AdminRoute>
             },
             {
                 path:'update-session/:id',

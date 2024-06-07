@@ -1,50 +1,16 @@
 import { FaStar } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAdmin from "../Hooks/useAdmin";
 import useTutor from "../Hooks/useTutor";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
 
 const SassionCardDetails = () => {
-    // const [review, setReview] = useState([])
-    // const axiosCommon = useAxiosCommon()
-    // const { id } = useParams()
     const [isTutor] = useTutor()
     const [isAdmin] = useAdmin()
-    // const axiosCommon = useAxiosSecure()
-
-    // const session = sessions.find(session => session._id === id )
-    // const { session_title: title, tutor_name, description,
-    //     registration_start_date, registration_end_date, class_start_time,
-    //     class_end_time, session_duration, registration_fee, category, session_id } = session || {}
-
-    // const { data: sessions = [] } = useQuery({
-    //     queryKey: ['session'],
-    //     queryFn: async () => {
-    //         const { data } = await axiosCommon.get(`/allSessions`)
-    //         return data
-    //     }
-    // })
-
-    // // const session = sessions.find(session => session._id === id )
-    // // const { session_title: title, tutor_name, description,
-    // //     registration_start_date, registration_end_date, class_start_time,
-    // //     class_end_time, session_duration, registration_fee, category, session_id } = session || {}
-
-    // const { data: allReview = [], } = useQuery({
-    //     queryKey: ['allReview'],
-    //     queryFn: async () => {
-    //         const { data } = await axiosCommon.get('/reviews')
-    //         return data
-    //     }
-    // })
-    // setReview(allReview)
-
-
-
-
     const { id } = useParams()
     const axiosCommon = useAxiosCommon()
+    const navigate = useNavigate()
 
     const { data: sessions = [] } = useQuery({
         queryKey: ['session'],
@@ -70,7 +36,9 @@ const SassionCardDetails = () => {
     const totalRating = reviews.reduce((total, item) => total + item.rating, 0)
 
     const handleBook = () => {
-        console.log('object');
+        if(!registration_fee == 0){
+            navigate('/payment')
+        }
     }
 
 
@@ -121,7 +89,7 @@ const SassionCardDetails = () => {
                                 </p>
                             </div>
                         </div>
-                        <button onClick={handleBook} disabled={registration_end_date >= new Date().toISOString() || isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
+                        <button onClick={handleBook} disabled={ isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
                             <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
                             <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
                             <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
