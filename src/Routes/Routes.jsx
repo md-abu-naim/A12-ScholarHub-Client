@@ -24,6 +24,7 @@ import CreateSession from "../Pages/Dashboard/TutorBar/CreateSession";
 import MyAllSession from "../Pages/Dashboard/TutorBar/MyAllSession";
 import UploadMaterials from "../Pages/Dashboard/TutorBar/UploadMaterials";
 import MyAllMaterials from "../Pages/Dashboard/TutorBar/MyAllMaterials";
+import Profile from "../Pages/Dashboard/Profile/Profile";
 
 
 const router = createBrowserRouter([
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <PrivateRoutes><Dashboard /></PrivateRoutes>,
         children: [
+            {
+                path: 'profile',
+                element: <PrivateRoutes><Profile></Profile></PrivateRoutes>
+            },
+            
             // Student Routes
             {
                 path:'view-booked-session',
