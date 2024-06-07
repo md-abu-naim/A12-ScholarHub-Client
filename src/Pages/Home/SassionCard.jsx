@@ -1,26 +1,20 @@
-// import useAxiosCommon from "../../Hooks/useAxiosCommon";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import useAxiosCommon from "../../Hooks/useAxiosCommon";
 import { Link } from "react-router-dom";
 import CommonBtn from "../../Shared/CommonBtn";
-// import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 const SassionCard = () => {
-    const [sessions, setSassions] = useState([])
-    // const newDate = new Date().toLocaleDateString()
-    // const axiosCommon = useAxiosCommon()
-    // const {data: study = []} = useQuery({
-    //     queryKey: ['study'],
-    //     queryFn: async() => {
-    //         const {data} = axios()
-    //         console.log(data);
-    //     }
-    // })
+    const axiosCommon = useAxiosCommon()
 
-    useEffect(() => {
-        axios('/SassionCard.json')
-            .then(res => setSassions(res.data))
-    }, [])
+    const { data: sessions = [] } = useQuery({
+        queryKey: ['allSessions'],
+        queryFn: async () => {
+            const { data } = await axiosCommon.get(`/allSessions`)
+            const sessions = data.filter(session => session.status === 'Approved' )
+            return sessions
+        }
+    })
+
     return (
         <>
             {
@@ -47,12 +41,12 @@ const SassionCard = () => {
                         </div>
                     </div>
                     <div className="flex items-end justify-end mt-4"> 
-                        <Link to={`/${session.sassion_title}`} ><CommonBtn title={session.registration_end_date > new Date().toISOString() ? ' closed' : 'Ongoing' } /></Link>
+                        <Link to={`/${session._id}`} ><CommonBtn title={session.registration_end_date > new Date().toISOString() ? ' closed' : 'Ongoing' } /></Link>
                     </div>
                 </div>)
             }
         </>
     );
 };
-// 'Ongoing'
+
 export default SassionCard;

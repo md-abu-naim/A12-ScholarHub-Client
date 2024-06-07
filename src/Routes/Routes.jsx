@@ -41,7 +41,7 @@ const router = createBrowserRouter([
                 element: <AllTutors />
             },
             {
-                path: '/:sassion_title',
+                path: '/:id',
                 element: <PrivateRoutes><SassionCardDetails /></PrivateRoutes>
             },
 
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
                 element: <PrivateRoutes><ViewBookedSession /></PrivateRoutes>
             },
             {
-                path:'booked-session/:session_title',
+                path:'booked-session/:id',
                 element: <PrivateRoutes><ViewBookedSessionDetails /></PrivateRoutes>
             },
             {

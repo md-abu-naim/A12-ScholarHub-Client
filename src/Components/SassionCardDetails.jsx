@@ -1,41 +1,78 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAdmin from "../Hooks/useAdmin";
 import useTutor from "../Hooks/useTutor";
+import useAxiosCommon from "../Hooks/useAxiosCommon";
 
 const SassionCardDetails = () => {
-    const [sassionsDetails, setSassionsDetails] = useState([])
-    const { sassion_title } = useParams()
+    // const [review, setReview] = useState([])
+    // const axiosCommon = useAxiosCommon()
+    // const { id } = useParams()
     const [isTutor] = useTutor()
     const [isAdmin] = useAdmin()
-    const axiosSecure = useAxiosSecure()
-    const sassions = sassionsDetails.find(sassion => sassion.sassion_title === sassion_title)
-    const { session_title: title, tutor_name, description,
-        registration_start_date, registration_end_date, class_start_time,
-        class_end_time, session_duration, registration_fee, category } = sassions || {}
+    // const axiosCommon = useAxiosSecure()
 
-    useEffect(() => {
-        axios('/SassionCard.json')
-            .then(res => setSassionsDetails(res.data))
-    }, [])
+    // const session = sessions.find(session => session._id === id )
+    // const { session_title: title, tutor_name, description,
+    //     registration_start_date, registration_end_date, class_start_time,
+    //     class_end_time, session_duration, registration_fee, category, session_id } = session || {}
 
-    const { data: reviews = [], } = useQuery({
-        queryKey: ['tutors'],
+    // const { data: sessions = [] } = useQuery({
+    //     queryKey: ['session'],
+    //     queryFn: async () => {
+    //         const { data } = await axiosCommon.get(`/allSessions`)
+    //         return data
+    //     }
+    // })
+
+    // // const session = sessions.find(session => session._id === id )
+    // // const { session_title: title, tutor_name, description,
+    // //     registration_start_date, registration_end_date, class_start_time,
+    // //     class_end_time, session_duration, registration_fee, category, session_id } = session || {}
+
+    // const { data: allReview = [], } = useQuery({
+    //     queryKey: ['allReview'],
+    //     queryFn: async () => {
+    //         const { data } = await axiosCommon.get('/reviews')
+    //         return data
+    //     }
+    // })
+    // setReview(allReview)
+
+
+
+
+    const { id } = useParams()
+    const axiosCommon = useAxiosCommon()
+
+    const { data: sessions = [] } = useQuery({
+        queryKey: ['session'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get('/reviews')
+            const { data } = await axiosCommon.get(`/allSessions`)
             return data
         }
     })
+
+    const session = sessions.find(session => session._id === id)
+    const { _id, session_title: title, tutor_name, description,
+        registration_start_date, registration_end_date, class_start_time,
+        class_end_time, session_duration, registration_fee, category } = session || {}
+        
+    const { data: reviews = [], } = useQuery({
+        queryKey: ['tutors'],
+        queryFn: async () => {
+            const { data } = await axiosCommon.get('/reviews')
+            const filterData = data.filter(review => review.session_id === _id)
+            return filterData
+        }
+    })
+    const totalRating = reviews.reduce((total, item) => total + item.rating, 0)
 
     const handleBook = () => {
         console.log('object');
     }
 
-    const totalRating = reviews.reduce((total, item) => total + item.rating, 0)
 
     return (
         <div className="pt-24 ">
@@ -103,18 +140,23 @@ const SassionCardDetails = () => {
                         </h2>
                         <div className="mt-8 space-y-4">
                             {
-                                reviews.map(review => <div key={review._id} className=" bg-[#1B1616] p-5 rounded-lg">
-                                    <div className="flex flex-col space-y-4 md:space-y-0">
-                                        <div className="flex items-center mb-3 gap-3">
-                                            <img src={review.image} alt="" className="self-center flex-shrink-0 w-12 h-12 border-[#C39C5D] border-2 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300" />
-                                            <div className="font-bold ">
-                                                <h4 className="text-lg font-semibold text-center md:text-left">{review.name}</h4>
-                                                <p className="flex gap-1 items-center">{review.rating}<FaStar className="text-[#C39C5D]" /></p>
-                                            </div>
-                                        </div>
-                                        <p className="dark:text-gray-600"><span className="text-[#C39C5D]">Review:</span> {review.review}</p>
+                                reviews.length <= 0 ? <div className=" bg-[#1B1616] p-5 rounded-lg">
+                                    <div className="flex items-center justify-center">
+                                        <h4 className="text-lg font-semibold text-center md:text-left">No Review</h4>
                                     </div>
-                                </div>)
+                                </div> :
+                                    reviews.map(review => <div key={review._id} className=" bg-[#1B1616] p-5 rounded-lg">
+                                        <div className="flex flex-col space-y-4 md:space-y-0">
+                                            <div className="flex items-center mb-3 gap-3">
+                                                <img src={review.image} alt="" className="self-center flex-shrink-0 w-12 h-12 border-[#C39C5D] border-2 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-300" />
+                                                <div className="font-bold ">
+                                                    <h4 className="text-lg font-semibold text-center md:text-left">{review.name}</h4>
+                                                    <p className="flex gap-1 items-center">{review.rating}<FaStar className="text-[#C39C5D]" /></p>
+                                                </div>
+                                            </div>
+                                            <p className="dark:text-gray-600"><span className="text-[#C39C5D]">Review:</span> {review.review}</p>
+                                        </div>
+                                    </div>)
                             }
                         </div>
                     </section>

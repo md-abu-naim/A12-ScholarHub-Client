@@ -20,8 +20,8 @@ const CreateSession = () => {
         const description = form.description.value
         const registration_start_date = startDate.toLocaleDateString()
         const registration_end_date = endDate.toLocaleDateString()
-        const class_start_time = form.session_title.value
-        const class_end_time = form.session_title.value
+        const class_start_time = form.class_start_time.value
+        const class_end_time = form.class_end_time.value
         const session_duration = form.session_duration.value
         const registration_fee = form.registration_fee.value
         const category = form.category.value
@@ -29,7 +29,7 @@ const CreateSession = () => {
         const tutor_email = user?.email
         const session = {session_title, tutor_name, description, registration_start_date,
             registration_end_date, class_start_time, class_end_time, session_duration, 
-            registration_fee, category, status, tutor_email
+            registration_fee, category, status, tutor_email, 
         }
 
         axiosSecure.post('/session', session)

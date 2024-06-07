@@ -40,7 +40,7 @@ const AllStudySession = () => {
     const handleApprove = (e) => {
         e.preventDefault()
         const registration_fee = e.target.registration_fee.value
-        const status = 'Approve'
+        const status = 'Approved'
         const id = approveId
         const updateInfo = {
             registration_fee: registration_fee,

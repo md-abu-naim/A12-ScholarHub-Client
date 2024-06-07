@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
@@ -8,29 +7,32 @@ import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 
 const ViewBookedSessionDetails = () => {
-    const [sassionsDetails, setSassionsDetails] = useState([])
-    const { session_title } = useParams()
+    const { id } = useParams()
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
-    const sassions = sassionsDetails.find(sassion => sassion.sassion_title === session_title)
-    const { sassion_title: title, tutor_name, rating, description,
+
+    const { data: sessions = [] } = useQuery({
+        queryKey: ['session'],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get(`/allSessions`)
+            return data
+        }
+    })
+
+    const session = sessions.find(session => session._id === id)
+    const {_id, session_title: title, tutor_name, description,
         registration_start_date, registration_end_date, class_start_time,
-        class_end_time, session_duration, registration_fee, category } = sassions || {}
-
-    useEffect(() => {
-        axios('/SassionCard.json')
-            .then(res => setSassionsDetails(res.data))
-    }, [])
-
+        class_end_time, session_duration, registration_fee, category } = session || {}
 
     const { data: reviews = [], refetch } = useQuery({
         queryKey: ['tutors'],
         queryFn: async () => {
             const { data } = await axiosSecure.get('/reviews')
-            console.log(data);
-            return data
+            const filterData = data.filter(review => review.session_id === _id)
+            return filterData
         }
     })
+    const totalRating = reviews.reduce((total, item) => total + item.rating, 0)
 
     const handleReview = e => {
         e.preventDefault()
@@ -39,7 +41,8 @@ const ViewBookedSessionDetails = () => {
         const rating = form.rating.value
         const name = user?.displayName
         const image = user?.photoURL
-        const studentReview = { review, rating, name, image }
+        const session_id = id
+        const studentReview = { review, rating, name, image, session_id }
 
         axiosSecure.post('/review', studentReview)
             .then(res => {
@@ -93,7 +96,7 @@ const ViewBookedSessionDetails = () => {
                                 Registration Fee: {registration_fee}
                             </p>
                             <p className='mt-6 text-lg font-bold text-white '>
-                                Average rating: {rating}
+                                Average rating: {totalRating}
                             </p>
                         </div>
                     </div>
