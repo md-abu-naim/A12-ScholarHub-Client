@@ -24,7 +24,6 @@ const AllStudySession = () => {
     const handleRejectModal = (id, title) => {
         setTitle(title);
         setApproveId(id)
-        console.log(id, title);
         document.getElementById('my_modal_2').showModal()
     }
 
@@ -47,7 +46,9 @@ const AllStudySession = () => {
             registration_fee: registration_fee,
             status: status
         }
+
         e.target.reset()
+
         console.log(id, updateInfo);
         axiosSecure.put(`/session/${id}`, updateInfo)
             .then(res => {
@@ -65,14 +66,14 @@ const AllStudySession = () => {
         const form = e.target
         const reason = form.reason.value
         const feedback = form.feedback.value
-        const updateInfo = {
+        const rejectReason = {
             status: 'Rejected',
             reason: reason,
             feedback: feedback
         }
         
         e.target.reset()
-        axiosSecure.put(`/session/${id}`, updateInfo)
+        axiosSecure.put(`/session/${id}`, rejectReason)
             .then(res => {
                 console.log(res.data);
                 if (res.data.modifiedCount > 0) {
@@ -86,7 +87,7 @@ const AllStudySession = () => {
             <SectionTitle heading='view all study session' subHeading='This is our all study session page' />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                 {
-                  sessions.map((session, i) => <div key={i} className='w-full rel max-h-[300px] max-w-md  px-4 py-3 bg-[#1B1616] rounded-md shadow-md hover:scale-[1.05] transition-all flex flex-col'>
+                    sessions.map((session, i) => <div key={i} className='w-full rel max-h-[300px] max-w-md  px-4 py-3 bg-[#1B1616] rounded-md shadow-md hover:scale-[1.05] transition-all flex flex-col'>
                         <div className="flex-grow">
                             <div className='flex items-center justify-between'>
                                 <span className='text-xs font-light text-white '>

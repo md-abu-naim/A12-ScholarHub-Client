@@ -5,7 +5,7 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import ViewReasion from "./Modals/ViewReasion";
 import { useState } from "react";
-import NewReques from "./Modals/NewReques";
+import toast from "react-hot-toast";
 
 const MyAllSession = () => {
     const [sessionId, setSessionId] = useState('')
@@ -14,15 +14,14 @@ const MyAllSession = () => {
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure()
 
-    const { data: allSessions = [] } = useQuery({
+    const { data: allSessions = [], refetch } = useQuery({
         queryKey: ['allSessions', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/sessions/${user?.email}`)
             return data
         }
     })
-console.log(sessionId);
-console.log(reason, feedback);
+
     const handleRejectModal = (id, reason, feedback) => {
         setFeedback(feedback)
         setReason(reason)
@@ -30,9 +29,20 @@ console.log(reason, feedback);
         document.getElementById('my_modal_3').showModal()
     }
 
-    const handleApproveModal = (id) => {
-        setSessionId(id)
-        document.getElementById('my_modal_2').showModal()
+    const handleNewRequest = () => {
+        const id = sessionId
+        const NewRequest = {
+            status: 'Pending',
+            registration_fee: '0'
+        }
+        axiosSecure.put(`/session/${id}`,NewRequest )
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    toast.success('New Request has been successfully!🤩')
+                }
+            })
     }
 
     return (
@@ -63,11 +73,10 @@ console.log(reason, feedback);
                             </div>
                         </div>
                         <div className="flex items-end justify-end mt-4">
-                            { session.status === "Rejected" ? <button onClick={() => handleRejectModal(session._id, session.reason, session.feedback)}><CommonBtn title= "View Rejected" /></button> :
-                             <button onClick={() => handleApproveModal(session._id)}><CommonBtn title= 'New Request' /></button>}
+                            {session.status === "Rejected" ? <button onClick={() => handleRejectModal(session._id, session.reason, session.feedback)}><CommonBtn title="View Rejected" /></button> :
+                                <button><CommonBtn title={session.status === 'Pending' ? 'Pending...' : 'Approved'} /></button>}
 
-                            <ViewReasion />
-                            <NewReques />
+                            <ViewReasion reason={reason} feedback={feedback} handleNewRequest={handleNewRequest} />
                         </div>
                     </div>)
                 }
