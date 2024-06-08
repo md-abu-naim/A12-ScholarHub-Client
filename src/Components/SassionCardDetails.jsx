@@ -1,5 +1,5 @@
 import { FaStar } from "react-icons/fa";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAdmin from "../Hooks/useAdmin";
 import useTutor from "../Hooks/useTutor";
@@ -13,7 +13,6 @@ const SassionCardDetails = () => {
     const { id } = useParams()
     const { user } = useAuth()
     const axiosCommon = useAxiosCommon()
-    const navigate = useNavigate()
 
     const { data: sessions = [] } = useQuery({
         queryKey: ['session'],
@@ -40,7 +39,7 @@ const SassionCardDetails = () => {
 
     const handleBook = (id) => {
         if (registration_fee > 0) {
-            return navigate('/payment')
+            return 
         }
 
         const bookedData = {
@@ -107,7 +106,7 @@ const SassionCardDetails = () => {
                             </div>
                         </div>
                         {
-                            registration_fee <= 0 ? <button onClick={() => handleBook(_id)} disabled={isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
+                            registration_fee <= 0 || !isAdmin || !isTutor ? <button onClick={() => handleBook(_id)} disabled={!new Date() >= new Date(session.registration_start_date) && new Date() <= new Date(session.registration_end_date) || isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
                                 <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
                                 <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
                                 <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
@@ -115,9 +114,9 @@ const SassionCardDetails = () => {
                                 <span className="absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5"></span>
                                 <span className="absolute inset-0 w-full h-full border border-white rounded-md opacity-10"></span>
                                 <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-5"></span>
-                                <span className="relative">{registration_end_date >= new Date().toISOString() ? 'Registration Closed' : 'Book Now'}</span>
+                                <span className="relative">{new Date() >= new Date(session.registration_start_date) && new Date() <= new Date(session.registration_end_date) ? 'Book Now' : 'Registration Closed'}</span>
                             </button> :
-                                <Link to={`/payment/${_id}`} disabled={isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
+                                <Link to={`/payment/${_id}`} disabled={new Date() < new Date(session.registration_start_date) && new Date() > new Date(session.registration_end_date) || isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
                                     <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
                                     <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
                                     <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
@@ -125,7 +124,7 @@ const SassionCardDetails = () => {
                                     <span className="absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5"></span>
                                     <span className="absolute inset-0 w-full h-full border border-white rounded-md opacity-10"></span>
                                     <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-5"></span>
-                                    <span className="relative">Book Now</span>
+                                    <span className="relative">{new Date() >= new Date(session.registration_start_date) && new Date() <= new Date(session.registration_end_date) ? 'Book Now' : 'Registration Closed'}</span>
                                 </Link>
                         }
                     </div>

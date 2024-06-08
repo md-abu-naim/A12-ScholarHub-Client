@@ -24,11 +24,9 @@ const Home = () => {
             <div className="mt-10">
                 <Banner />
             </div>
-            <div className="my-14">
+            <div id="sessions"  className="my-14">
                 <SectionTitle heading='Study session section' subHeading='This is our Study Sassion' ></SectionTitle>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-5">
-                    <SassionCard />
-                </div>
+                <SassionCard />
             </div>
             <div className="my-14">
                 <SectionTitle heading='Tutor Section' subHeading='Our Tutor team' ></SectionTitle>

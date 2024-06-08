@@ -108,7 +108,7 @@ const AllStudySession = () => {
                             refetch();
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "Your Note has been deleted.",
+                                text: "Session has been deleted.",
                                 icon: "success",
                                 background: "black",
                                 color: 'white'

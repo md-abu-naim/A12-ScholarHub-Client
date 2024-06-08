@@ -1,16 +1,17 @@
-
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useQuery } from "@tanstack/react-query";
 import './CheckoutForm.css'
-// import CommonBtn from '../../Shared/CommonBtn';
+import CommonBtn from '../../Shared/CommonBtn';
 import { useEffect, useState } from 'react';
 import useAuth from '../../Hooks/useAuth';
 import useAxiosCommon from '../../Hooks/useAxiosCommon';
 import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const CheckoutForm = () => {
     const [clientSecret, setClientSecret] = useState()
     const [cardError, setCardError] = useState('')
+    const [transactionId, setTransactionId] = useState('')
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useAuth()
@@ -26,28 +27,14 @@ const CheckoutForm = () => {
         }
     })
     const session = sessions.find(session => session._id === id)
-    const registration_fee = session?.registration_fee
-
-    // useEffect(() => {
-    //     // fetch client secret
-    //     if (session?.registration_fee && session?.registration_fee > 1) {
-    //         getClientSecret({ registration_fee: session?.registration_fee })
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [session?.registration_fee])
-
-    // //   get clientSecret
-    // const getClientSecret = async registration_fee => {
-    //     const { data } = await axiosCommon.post(`/create-payment-intent`, registration_fee)
-    //     console.log('clientSecret from server--->', data)
-    //     setClientSecret(data.clientSecret)
-    // }
+    const { session_title: title, tutor_name, description,
+        registration_start_date, registration_end_date, class_start_time,
+        class_end_time, session_duration, registration_fee, category } = session || {}
 
     useEffect(() => {
         if (registration_fee > 0) {
             axiosCommon.post('/create-payment-intent', { registration_fee: registration_fee })
                 .then(res => {
-                    console.log(res.data.clientSecret);
                     setClientSecret(res.data.clientSecret)
                 })
         }
@@ -83,10 +70,10 @@ const CheckoutForm = () => {
             await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: card,
-                    billing_details:{
+                    billing_details: {
                         email: user?.email || 'anonymouse',
                         name: user?.displayName || 'anonymouse'
-                    } 
+                    }
                 },
             })
 
@@ -98,6 +85,21 @@ const CheckoutForm = () => {
 
         if (paymentIntent.status === 'succeeded') {
             console.log(paymentIntent)
+            setTransactionId(paymentIntent.id)
+
+            const bookedData = {
+                session_id: id, title, tutor_name, description, registration_start_date,
+                registration_end_date, class_start_time, class_end_time, session_duration, registration_fee, category, email: user?.email
+            }
+            console.log(bookedData);
+
+            axiosCommon.post('/booked-sesssion', bookedData)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    toast.success('Session booking is complete')
+                }
+            })
         }
     }
 
@@ -121,12 +123,11 @@ const CheckoutForm = () => {
                         },
                     }}
                 />
-                <button className='btn bg-blue-600' type="submit" disabled={!stripe}>
-                    Pay
-                </button>
-                {/* <button type="submit" disabled={!stripe || !clientSecret }><CommonBtn title='Pay' /></button> */}
+
+                <button type="submit" disabled={!stripe || !clientSecret}><CommonBtn title={`Pay ${session.registration_fee}`} /></button>
             </form>
             {cardError && <p className='text-red-600 ml-8'>{cardError}</p>}
+            {transactionId && <p className='text-green-700'>Transaction id: {transactionId}</p>}
         </>
     );
 };
