@@ -1,14 +1,17 @@
 import { FaStar } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAdmin from "../Hooks/useAdmin";
 import useTutor from "../Hooks/useTutor";
 import useAxiosCommon from "../Hooks/useAxiosCommon";
+import toast from "react-hot-toast";
+import useAuth from "../Hooks/useAuth";
 
 const SassionCardDetails = () => {
     const [isTutor] = useTutor()
     const [isAdmin] = useAdmin()
     const { id } = useParams()
+    const { user } = useAuth()
     const axiosCommon = useAxiosCommon()
     const navigate = useNavigate()
 
@@ -24,7 +27,7 @@ const SassionCardDetails = () => {
     const { _id, session_title: title, tutor_name, description,
         registration_start_date, registration_end_date, class_start_time,
         class_end_time, session_duration, registration_fee, category } = session || {}
-        
+
     const { data: reviews = [], } = useQuery({
         queryKey: ['tutors'],
         queryFn: async () => {
@@ -35,10 +38,24 @@ const SassionCardDetails = () => {
     })
     const totalRating = reviews.reduce((total, item) => total + item.rating, 0)
 
-    const handleBook = () => {
-        if(!registration_fee == 0){
-            navigate('/payment')
+    const handleBook = (id) => {
+        if (registration_fee > 0) {
+            return navigate('/payment')
         }
+
+        const bookedData = {
+            session_id: id, title, tutor_name, description, registration_start_date,
+            registration_end_date, class_start_time, class_end_time, session_duration, registration_fee, category, email: user?.email
+        }
+        console.log(bookedData);
+
+        axiosCommon.post('/booked-sesssion', bookedData)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    toast.success('Session booking is complete')
+                }
+            })
     }
 
 
@@ -89,16 +106,28 @@ const SassionCardDetails = () => {
                                 </p>
                             </div>
                         </div>
-                        <button onClick={handleBook} disabled={ isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
-                            <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
-                            <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
-                            <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
-                            <span className="absolute bottom-0 left-0 w-4 h-full bg-gradient-to-r from-white to-transparent opacity-5"></span>
-                            <span className="absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5"></span>
-                            <span className="absolute inset-0 w-full h-full border border-white rounded-md opacity-10"></span>
-                            <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-5"></span>
-                            <span className="relative">{registration_end_date >= new Date().toISOString() ? 'Registration Closed' : 'Book Now'}</span>
-                        </button>
+                        {
+                            registration_fee <= 0 ? <button onClick={() => handleBook(_id)} disabled={isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
+                                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
+                                <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
+                                <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
+                                <span className="absolute bottom-0 left-0 w-4 h-full bg-gradient-to-r from-white to-transparent opacity-5"></span>
+                                <span className="absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5"></span>
+                                <span className="absolute inset-0 w-full h-full border border-white rounded-md opacity-10"></span>
+                                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-5"></span>
+                                <span className="relative">{registration_end_date >= new Date().toISOString() ? 'Registration Closed' : 'Book Now'}</span>
+                            </button> :
+                                <Link to={`/payment/${_id}`} disabled={isAdmin || isTutor} className="relative mt-8 w-full inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
+                                    <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-[#c59d5f] via-[#1B1616] to-[#c59d5f] group-hover:opacity-100"></span>
+                                    <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
+                                    <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
+                                    <span className="absolute bottom-0 left-0 w-4 h-full bg-gradient-to-r from-white to-transparent opacity-5"></span>
+                                    <span className="absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5"></span>
+                                    <span className="absolute inset-0 w-full h-full border border-white rounded-md opacity-10"></span>
+                                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-5"></span>
+                                    <span className="relative">Book Now</span>
+                                </Link>
+                        }
                     </div>
                 </div>
                 <div className="w-full">

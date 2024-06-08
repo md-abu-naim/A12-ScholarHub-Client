@@ -12,15 +12,15 @@ const ViewBookedSessionDetails = () => {
     const axiosSecure = useAxiosSecure()
 
     const { data: sessions = [] } = useQuery({
-        queryKey: ['session'],
+        queryKey: ['session', user?.email],
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/allSessions`)
+            const { data } = await axiosSecure.get(`/booked-session/${user?.email}`)
             return data
         }
     })
 
     const session = sessions.find(session => session._id === id)
-    const {_id, session_title: title, tutor_name, description,
+    const {_id, session_id, session_title: title, tutor_name, description,
         registration_start_date, registration_end_date, class_start_time,
         class_end_time, session_duration, registration_fee, category } = session || {}
 
@@ -41,7 +41,7 @@ const ViewBookedSessionDetails = () => {
         const rating = form.rating.value
         const name = user?.displayName
         const image = user?.photoURL
-        const session_id = id
+        session_id
         const studentReview = { review, rating, name, image, session_id }
 
         axiosSecure.post('/review', studentReview)

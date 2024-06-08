@@ -4,16 +4,17 @@ import CommonBtn from "../../../Shared/CommonBtn";
 import SectionTitle from "../../../Shared/SectionTitle";
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAuth from "../../../Hooks/useAuth";
 
 const ViewBookedSession = () => {
     const axiosSecure = useAxiosSecure()
+    const {user} = useAuth()
 
     const { data: sessions = [] } = useQuery({
-        queryKey: ['allSessions'],
+        queryKey: ['allSessions', user?.email],
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/allSessions`)
-            const sessions = data.filter(session => session.status === 'Approved' )
-            return sessions
+            const { data } = await axiosSecure.get(`/booked-session/${user?.email}`)
+            return data
         }
     })
 

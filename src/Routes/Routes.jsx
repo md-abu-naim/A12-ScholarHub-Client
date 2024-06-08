@@ -50,7 +50,7 @@ const router = createBrowserRouter([
                 element: <PrivateRoutes><SassionCardDetails /></PrivateRoutes>
             },
             {
-                path: 'payment',
+                path: '/payment/:id',
                 element: <PrivateRoutes><Payment /></PrivateRoutes>
             },
         ]
