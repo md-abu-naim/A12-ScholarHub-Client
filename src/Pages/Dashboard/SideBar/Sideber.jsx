@@ -28,10 +28,10 @@ const Sideber = () => {
         <div>
             <>
                 {/* Small Screen Navbar */}
-                <div className='bg-[#C39C5D] text-white flex justify-between md:hidden'>
+                <div className='bg-[#C39C5D] text-black flex justify-between md:hidden'>
                     <div>
                         <div className='block cursor-pointer p-4 font-bold'>
-                            <Link to='/' className='text-2xl'>ScholarHub</Link>
+                            <Link to='/' className='text-2xl text-black'>ScholarHub</Link>
                         </div>
                     </div>
 

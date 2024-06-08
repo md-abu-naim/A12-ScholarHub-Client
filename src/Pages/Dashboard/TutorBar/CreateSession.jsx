@@ -68,7 +68,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Tutor Name</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" value={user?.displayName} name="tutor_name" placeholder="Buyer Name" className="input bg-[#1B1616] text-white input-bordered w-full" />
+                            <input type="text" value={user?.displayName} name="tutor_name" placeholder="Tutor Name" className="input bg-[#1B1616] text-white input-bordered w-full" />
                         </label>
                     </div>
                     <div className="form-control md:w-1/2 lg:ml-4">
@@ -76,7 +76,7 @@ const CreateSession = () => {
                             <span className="label-text font-bold text-white">Tutor Email</span>
                         </label>
                         <label className="input-group">
-                            <input type="email" value={user?.email} name="tutor_email" placeholder="Email" className="input bg-[#1B1616] input-bordered text-white w-full" />
+                            <input type="email" value={user?.email} name="tutor_email" placeholder="Tutor Email" className="input bg-[#1B1616] input-bordered text-white w-full" />
                         </label>
                     </div>
                 </div>

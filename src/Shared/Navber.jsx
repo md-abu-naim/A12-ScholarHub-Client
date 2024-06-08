@@ -20,7 +20,7 @@ const Navber = () => {
         <div className="navbar font-serif bg-[#C39C5D] py-3 px-5 md:px-12">
             <div className="navbar-start">
 
-                <Link to='/' className="btn btn-ghost font-bold text-xl md:text-3xl"> ScholarHub </Link>
+                <Link to='/' className="btn btn-ghost font-bold text-xl md:text-3xl text-black"> ScholarHub </Link>
             </div>
             <div className="navbar-end">
                 {

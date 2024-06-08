@@ -29,6 +29,7 @@ import UpdateSession from "../Pages/Dashboard/AdminBar/UpdateSession";
 import Payment from "../Components/Payment/Payment";
 import AdminRoute from "./AdminRoute";
 import TutorRoute from "./TutorRoute";
+import Upload from "../Pages/Dashboard/TutorBar/Upload";
 
 
 const router = createBrowserRouter([
@@ -110,6 +111,10 @@ const router = createBrowserRouter([
             {
                 path:'upload-materials',
                 element: <TutorRoute><PrivateRoutes><UploadMaterials /></PrivateRoutes></TutorRoute>
+            },
+            {
+                path:'upload-materials/:id',
+                element: <TutorRoute><PrivateRoutes><Upload /></PrivateRoutes></TutorRoute>
             },
             {
                 path:'my-all-materials',

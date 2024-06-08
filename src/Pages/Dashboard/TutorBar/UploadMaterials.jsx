@@ -3,16 +3,17 @@ import SectionTitle from "../../../Shared/SectionTitle";
 import CommonBtn from "../../../Shared/CommonBtn";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from '@tanstack/react-query'
+import useAuth from "../../../Hooks/useAuth";
 
 const UploadMaterials = () => {
     const axiosSecure = useAxiosSecure()
+    const {user} = useAuth()
 
-    const { data: sessions = [] } = useQuery({
-        queryKey: ['allSessions'],
+    const { data: sessions = [],  } = useQuery({
+        queryKey: ['allSessions', user?.email],
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/allSessions`)
-            const sessions = data.filter(session => session.status === 'Approved' )
-            return sessions
+            const { data } = await axiosSecure.get(`/sessions/${user?.email}`)
+            return data
         }
     })
     
@@ -21,7 +22,7 @@ const UploadMaterials = () => {
             <SectionTitle heading='Upload materials' subHeading='This page is for uploading materials' />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {
-                    sessions.slice(0, 6).map((session, i) => <div key={i} className='w-full rel max-h-[300px] max-w-md  px-4 py-3 bg-[#1B1616] rounded-md shadow-md hover:scale-[1.05] transition-all flex flex-col'>
+                    sessions.map((session, i) => <div key={i} className='w-full rel max-h-[300px] max-w-md  px-4 py-3 bg-[#1B1616] rounded-md shadow-md hover:scale-[1.05] transition-all flex flex-col'>
                         <div className="flex-grow">
                             <div className='flex items-center justify-between'>
                                 <span className='text-xs font-light text-white '>
@@ -44,7 +45,7 @@ const UploadMaterials = () => {
                             </div>
                         </div>
                         <div className="flex items-end justify-end mt-4">
-                            <Link to={`/${session._id}`} ><CommonBtn title='Upload' /></Link>
+                            <Link to={`/dashboard/upload-materials/${session._id}`} ><CommonBtn title='Upload' /></Link>
                         </div>
                     </div>)
                 }

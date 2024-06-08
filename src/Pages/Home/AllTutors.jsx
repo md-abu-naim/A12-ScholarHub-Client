@@ -24,12 +24,12 @@ const AllTutors = () => {
             <SectionTitle heading='All Tutors' subHeading='Our Tutors team' ></SectionTitle>
             <div className=" text-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
                 {
-                    tutors.map((tutor, i) => <div key={i} className="max-w-md p-4 text-white">
+                    tutors.map((tutor, i) => <div key={i} className=" p-4 text-white">
                         <div key={tutor.id} className="card rounded-none">
                             <div className=" dropdown relative dropdown-hover rounded-md">
-                                <div tabIndex={0} role="button" ><img className=' rounded-sm' src={tutor.image} alt="Shoes" /></div>
+                                <div tabIndex={0} role="button" className="flex items-center justify-center" ><img className=' w-[350px] border-[#C59D5F] border h-[300px] rounded-sm' src={tutor.image} alt="Shoes" /></div>
                                 <ul tabIndex={0} className=" dropdown-content z-[1] lg:text-center absolute top-0 menu p-2 shadow bg-black  bg-opacity-70 h-full rounded- w-full">
-                                    <div className='absolute space-y-2 pb-10 bottom-5'>
+                                    <div className='absolute space-y-2 bottom-28'>
                                         <div className='flex text-[#C59D5F] text-lg gap-5 justify-center items-center'>
                                             <a href=""><FaFacebookF /></a>
                                             <a href=""><FaTwitter /></a>

@@ -40,9 +40,42 @@ const Login = () => {
             })
             .catch(error => {
                 console.error(error);
-                toast.error(error)
+                toast.error(error.message)
             })
     }
+
+    // const handleLogin = e => {
+    //     e.preventDefault()
+    //     const form = e.target
+    //     const email = form.email.value
+    //     const password = form.password.value
+
+    //     e.target.reset()
+
+    //     if (password === '') {
+    //         return toast.error('Please fulfill your form')
+    //     }
+    //     else if (password.length < 6) {
+    //         return toast.error('Password should be at least 6 characters or longer')
+    //     }
+    //     else if (!/[A-Z]/.test(password)) {
+    //         return toast.error('Your password should have at least one Uppercase characters')
+    //     }
+    //     else if (!/[a-z]/.test(password)) {
+    //         return toast.error('Your password should have at least one Lowercase characters')
+    //     }
+
+    //     loginUser(email, password)
+    //         .then(result => {
+    //             console.log(result.user);
+    //             toast.success('User signIn successfully')
+    //             navigate(location.state || '/')
+    //         })
+    //         .catch(error => {
+    //             console.error(error);
+    //             toast.error(error.message)
+    //         })
+    // }
 
     const handleGoogleLogin = () => {
         signInwithGoogle()
