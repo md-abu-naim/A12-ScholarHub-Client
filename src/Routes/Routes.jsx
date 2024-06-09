@@ -30,6 +30,8 @@ import Payment from "../Components/Payment/Payment";
 import AdminRoute from "./AdminRoute";
 import TutorRoute from "./TutorRoute";
 import Upload from "../Pages/Dashboard/TutorBar/Upload";
+import UpdateMaterials from "../Pages/Dashboard/TutorBar/UpdateMaterials";
+import UpdateMaterial from "../Pages/Dashboard/AdminBar/UpdateMaterial";
 
 
 const router = createBrowserRouter([
@@ -120,6 +122,10 @@ const router = createBrowserRouter([
                 path:'my-all-materials',
                 element: <TutorRoute><PrivateRoutes><MyAllMaterials /></PrivateRoutes></TutorRoute>
             },
+            {
+                path:'update-materials/:id',
+                element: <TutorRoute><PrivateRoutes><UpdateMaterials /></PrivateRoutes></TutorRoute>
+            },
 
             // Admin Routes
             {
@@ -132,15 +138,19 @@ const router = createBrowserRouter([
             },
             {
                 path:'update-session/:id',
-                element: <PrivateRoutes><UpdateSession /></PrivateRoutes>
+                element: <AdminRoute><PrivateRoutes><UpdateSession /></PrivateRoutes></AdminRoute>
             },
             {
                 path:'all-materials',
-                element: <PrivateRoutes><AllMaterials /></PrivateRoutes>
+                element: <AdminRoute><PrivateRoutes><AllMaterials /></PrivateRoutes></AdminRoute>
+            },
+            {
+                path:'materials/:id',
+                element:<AdminRoute> <PrivateRoutes><UpdateMaterial /></PrivateRoutes></AdminRoute>
             },
             {
                 path:'update-role/:id',
-                element: <PrivateRoutes><UpdateRole /></PrivateRoutes>
+                element: <AdminRoute><PrivateRoutes><UpdateRole /></PrivateRoutes></AdminRoute>
             },
         ]
     },
