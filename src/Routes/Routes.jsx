@@ -32,6 +32,7 @@ import TutorRoute from "./TutorRoute";
 import Upload from "../Pages/Dashboard/TutorBar/Upload";
 import UpdateMaterials from "../Pages/Dashboard/TutorBar/UpdateMaterials";
 import UpdateMaterial from "../Pages/Dashboard/AdminBar/UpdateMaterial";
+import Materials from "../Pages/Dashboard/StudentBar/Materials";
 
 
 const router = createBrowserRouter([
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
             {
                 path:'all-study-materials',
                 element: <PrivateRoutes><AllStudyMaterials /></PrivateRoutes>
+            },
+            {
+                path:'study-materials/:id',
+                element: <PrivateRoutes><Materials /></PrivateRoutes>
             },
 
             // Tutor Routes
