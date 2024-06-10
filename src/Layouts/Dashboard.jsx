@@ -6,10 +6,8 @@ const Dashboard = () => {
     return (
         <div className="bg-black font-serif">
             <div className='relative min-h-screen lg:flex'>
-                {/* Sidebar */}
                 <Sideber />
 
-                {/* Dynamic content */}
                 <div className='flex-1 md:ml-64'>
                     <div className='p-5'>
                         <Outlet />

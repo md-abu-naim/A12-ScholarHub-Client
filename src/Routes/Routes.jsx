@@ -1,6 +1,4 @@
-import {
-    createBrowserRouter,
-} from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import Root from "../Layouts/Root";
 import Home from "../Pages/Home/Home";
 import SassionCardDetails from "../Components/SassionCardDetails";

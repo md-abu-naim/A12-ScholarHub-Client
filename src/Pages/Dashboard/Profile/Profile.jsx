@@ -3,7 +3,6 @@ import useAuth from "../../../Hooks/useAuth"
 const Profile = () => {
     const { user } = useAuth()
 
-    console.log(user)
     return (
         <div className='flex justify-center items-center  h-screen'>
             <div className='bg-[#1B1616] text-white shadow-lg border border-[#c59d5f] rounded-2xl w-3/5'>

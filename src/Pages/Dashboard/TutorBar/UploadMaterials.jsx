@@ -76,7 +76,6 @@ const UploadMaterials = () => {
 
             {/* pagination */}
             <div className='flex justify-center mt-12'>
-                {/* Previous Button */}
                 <button
                     disabled={currentPage == 1}
                     onClick={() => handlePagination(currentPage - 1)}
@@ -101,7 +100,6 @@ const UploadMaterials = () => {
                         <span className='mx-1'>previous</span>
                     </div>
                 </button>
-                {/* Numbers */}
                 {pages.map(btnNum => (
                     <button
                         onClick={() => handlePagination(btnNum)}
@@ -112,7 +110,6 @@ const UploadMaterials = () => {
                         {btnNum}
                     </button>
                 ))}
-                {/* Next Button */}
                 <button
                     disabled={currentPage === numberOfPages}
                     onClick={() => handlePagination(currentPage + 1)}

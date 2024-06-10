@@ -11,6 +11,8 @@ import useAxiosCommon from "../Hooks/useAxiosCommon";
 export const AuthContext = createContext(null)
 const googleProvider = new GoogleAuthProvider()
 const githubProvider = new GithubAuthProvider()
+githubProvider.addScope("read:user");
+githubProvider.addScope("user:email");
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)

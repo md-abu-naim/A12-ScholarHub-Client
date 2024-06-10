@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import SectionTitle from "../../../Shared/SectionTitle";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-// import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosCommon from "../../../Hooks/useAxiosCommon";
@@ -16,14 +15,6 @@ const AllMaterials = () => {
 
     const numberOfPages = Math.ceil(count / itemsPerPage)
     const pages = [...Array(numberOfPages).keys()].map(element => element + 1)
-
-    // const { data: materials = [], } = useQuery({
-    //     queryKey: ['materials'],
-    //     queryFn: async () => {
-    //         const { data } = await axiosSecure.get(`/materials`)
-    //         return data
-    //     }
-    // })
 
 
     useEffect(() => {
@@ -75,7 +66,6 @@ const AllMaterials = () => {
 
             {/* pagination */}
             <div className='flex justify-center mt-12'>
-                {/* Previous Button */}
                 <button
                     disabled={currentPage == 1}
                     onClick={() => handlePagination(currentPage - 1)}
@@ -100,7 +90,6 @@ const AllMaterials = () => {
                         <span className='mx-1'>previous</span>
                     </div>
                 </button>
-                {/* Numbers */}
                 {pages.map(btnNum => (
                     <button
                         onClick={() => handlePagination(btnNum)}
@@ -110,7 +99,6 @@ const AllMaterials = () => {
                         {btnNum}
                     </button>
                 ))}
-                {/* Next Button */}
                 <button
                     disabled={currentPage === numberOfPages}
                     onClick={() => handlePagination(currentPage + 1)}
