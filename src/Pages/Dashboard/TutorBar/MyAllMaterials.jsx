@@ -55,11 +55,11 @@ const MyAllMaterials = () => {
         <div>
             <SectionTitle heading='My all materials' subHeading='Here are all my edited materials' />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                { materials.map(material => <div key={material._id} className="card w-96 bg-[#1B1616] text-white shadow-xl">
+                { materials.map(material => <div key={material._id} className="card md:w-96 bg-[#1B1616] text-white shadow-xl">
                     <figure><img src={material?.img} alt="Shoes" className="border-[10px] rounded-xl border-[#1B1616] h-[250px]" /></figure>
                     <div className="card-body px-3">
                         <h2 className="card-title text-xl">{material?.title}</h2>
-                        <p className="flex gap-2">Link: <a href={material?.link} target="_blank" className="text-blue-500 underline">https://drive.google.com/file</a></p>
+                        <p className="flex gap-2">Link: <a href={material?.link} target="_blank" className="text-blue-500 underline">{material.link.slice(0,30)}</a></p>
                         <p className="flex gap-2">Email: <span>{material?.tutor_email}</span></p>
                         <div className="card-actions flex justify-between items-center pt-3">
                             <Link to={`/dashboard/update-materials/${material._id}`}><CommonBtn title={<MdOutlineBrowserUpdated className="text-xl" />} /></Link>

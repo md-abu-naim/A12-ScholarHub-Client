@@ -10,7 +10,6 @@ import Reject from "./Modals/Reject";
 import { MdDeleteForever, MdOutlineBrowserUpdated } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-// import useAxiosCommon from "../../../Hooks/useAxiosCommon";
 
 
 const AllStudySession = () => {

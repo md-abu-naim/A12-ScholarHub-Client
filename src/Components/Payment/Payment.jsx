@@ -10,7 +10,6 @@ const Payment = () => {
             <SectionTitle heading='Payment now' subHeading="This is payment page" />
             <div className='flex flex-col mb-10 mx-auto md:w-1/2 px-5'>
                 <Elements stripe={stripePromise}>
-                    {/* checkout form */}
                     <CheckoutForm />
                 </Elements>
             </div>
