@@ -7,7 +7,7 @@
 ##### Admin Pass:- Admin12
 
 ### Features 
-1. Our website is related to a study platfrom. On our website, you can find all your favorite types of Chemistry, Computer Science, Literature, Data Science, Mathematics, Economics, and more different types of study sessions,
+1. Our website is related to a study platform. On our website, you can find all your favorite types of Chemistry, Computer Science, Literature, Data Science, Mathematics, Economics, and more different types of study sessions,
 
 2. You can see all our study sessions on our home page and click on the Ongoing button to see the complete details, and see the all reviews made by our other students.
 
