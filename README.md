@@ -30,7 +30,7 @@ My website is related to a study platform. On our website, you can find all your
 
 9. Finally, there is the Admin dashboard where the admin can see all the users and can change the role of the user if he wants.
 
-10. There is also View all study sessions to add tutors from where he can Approve and Reject and set the session fee, and there is also View all materials Page
+10. There is also View all study sessions to add tutors from where he can Approve and Reject and set the session fee, and there is also View all materials Page.
 
 ##### Project Technologies: React.js, Node.js, Express.js, MongoDB, Firebase, JWT, Tailwind CSS, Tanstack query.
 
