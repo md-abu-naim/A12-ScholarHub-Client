@@ -1,11 +1,10 @@
 # ScholarHub
 
 
-#### [Live link](https://scholarhub-98ad5.web.app/)
-#### [Server side](https://github.com/md-abu-naim/A12-ScholarHub-Server)
+## [Live link](https://scholarhub-98ad5.web.app/) : [Server side](https://github.com/md-abu-naim/A12-ScholarHub-Server)
 
 ##### Admin Email:- admin@gmail.com
-##### Admin Pass:- Admin12
+##### Admin Password:- Admin12
 
 ### Overview :- 
  A full-stack responsive website project - Time period: 10  days. <br>
